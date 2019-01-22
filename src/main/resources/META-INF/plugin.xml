@@ -1,5 +1,5 @@
 <idea-plugin>
-    <id>com.suiyiwen.plugin.idea</id>
+    <id>com.suiyiwen.plugin.idea.apidoc</id>
     <name>apiDoc</name>
     <version>1.0</version>
     <vendor email="dongxl123@163.com" url="http://blog.suiyiwen.com/">suiyiwen</vendor>
@@ -52,7 +52,7 @@
         <action id="apiDocPlugin.action.generate" text="apiDoc"
                 class="com.suiyiwen.plugin.idea.apidoc.action.GenerateAction">
             <!--IdeActions -->
-            <add-to-group group-id="EditorPopupMenu" anchor="before" relative-to-action="EditorToggleColumnMode"/>
+            <add-to-group group-id="EditorPopupMenu" anchor="after" relative-to-action="EditorToggleColumnMode"/>
             <keyboard-shortcut first-keystroke="ctrl shift alt p" keymap="$default"/>
         </action>
     </actions>
