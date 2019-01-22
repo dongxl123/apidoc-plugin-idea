@@ -1,0 +1,60 @@
+<idea-plugin>
+    <id>com.suiyiwen.plugin.idea</id>
+    <name>apiDoc</name>
+    <version>1.0</version>
+    <vendor email="dongxl123@163.com" url="http://blog.suiyiwen.com/">suiyiwen</vendor>
+
+    <description><![CDATA[
+    <h2>apiDoc generation helper</h2>
+    <ul>
+      <li>This is a plugin you can generate apiDoc from request in controller.</li>
+      <li>Please do aware <strong>This plugin is only for IntelliJ IDEA</strong>.</li>
+      <li>This plugin develop for the npm model <code>apidoc</code>, <a href="https://www.npmjs.com/package/apidoc">HomePage</a>, install command <code>npm i apidoc</code></li>
+    </ul>
+    ]]></description>
+
+    <change-notes><![CDATA[
+    <h2>v1.0</h2>
+    <ul>
+      <li>Support UI operation</li>
+      <li>Only Support for public method in Controller with annotation related by httpRequest</li>
+      <li>Supports shortcut to open ApiDoc, default option + ctrl + shift + p (mac), alt + ctrl + shift + p(win)</li>
+      <li>Support to generate apidoc</li>
+      <li>Support to modify the doc with memory feature</li>
+    </ul>
+    ]]>
+    </change-notes>
+
+    <!-- please see https://confluence.jetbrains.com/display/IDEADEV/Build+Number+Ranges for text -->
+    <idea-version since-build="143.2370.31"/>
+
+    <!-- please see https://confluence.jetbrains.com/display/IDEADEV/Plugin+Compatibility+with+IntelliJ+Platform+Products
+         on how to target different products -->
+    <!-- uncomment to enable plugin in all products
+    <depends>com.intellij.modules.lang</depends>
+    -->
+    <extensions defaultExtensionNs="com.intellij">
+        <applicationService serviceImplementation="com.suiyiwen.plugin.idea.apidoc.component.ApiDocSettings"/>
+    </extensions>
+
+    <application-components>
+        <component>
+            <interface-class>com.suiyiwen.plugin.idea.apidoc.component.operation.JavaDocWriter</interface-class>
+            <implementation-class>com.suiyiwen.plugin.idea.apidoc.component.operation.impl.JavaDocWriterImpl
+            </implementation-class>
+        </component>
+    </application-components>
+
+    <project-components>
+    </project-components>
+
+    <actions>
+        <action id="apiDocPlugin.action.generate" text="apiDoc"
+                class="com.suiyiwen.plugin.idea.apidoc.action.GenerateAction">
+            <!--IdeActions -->
+            <add-to-group group-id="EditorPopupMenu" anchor="before" relative-to-action="EditorToggleColumnMode"/>
+            <keyboard-shortcut first-keystroke="ctrl shift alt p" keymap="$default"/>
+        </action>
+    </actions>
+
+</idea-plugin>
