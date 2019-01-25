@@ -80,14 +80,6 @@ public enum PsiTypesUtils {
         return false;
     }
 
-    public boolean hasGenericTypes(PsiType psiType) {
-        if (psiType instanceof PsiClassType) {
-            PsiType[] genericPsiTypes = ((PsiClassType) psiType).getParameters();
-            return ArrayUtils.isNotEmpty(genericPsiTypes);
-        }
-        return false;
-    }
-
     public String getPresentableText(PsiType psiType) {
         String presentableText = psiType.getPresentableText();
         if (StringUtils.isNotBlank(presentableText)) {
@@ -109,7 +101,9 @@ public enum PsiTypesUtils {
             PsiClass psiClass = ((PsiClassReferenceType) psiType).resolve();
             for (PsiField psiField : psiClass.getFields()) {
                 if (psiField instanceof PsiEnumConstant) {
-                    sb.append(psiField.getText().trim()).append(JavaDocElements.NEW_LINE.getPresentation());
+                    sb.append(psiField.getNameIdentifier().getText().trim())
+                            .append(psiField.getNameIdentifier().getNextSibling().getText().trim())
+                            .append(JavaDocElements.NEW_LINE.getPresentation());
                 }
             }
             return sb.toString();

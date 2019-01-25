@@ -162,4 +162,19 @@ public enum FieldBeanTreeUtils {
         }
     }
 
+    public int getLines(List<FieldBean> fieldBeanList) {
+        if (CollectionUtils.isEmpty(fieldBeanList)) {
+            return 0;
+        }
+        int count = 0;
+        for (FieldBean fieldBean : fieldBeanList) {
+            count++;
+            if (CollectionUtils.isEmpty(fieldBean.getChildFieldList())) {
+                continue;
+            }
+            count += getLines(fieldBean.getChildFieldList());
+        }
+        return count;
+    }
+
 }

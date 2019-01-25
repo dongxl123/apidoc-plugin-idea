@@ -33,4 +33,10 @@ public interface ApiDocConstant {
     String MULTIPART_FILE_CLASS_NAME = "org.springframework.web.multipart.MultipartFile";
     String HTTP_SERVLET_REQUEST_CLASS_NAME = "javax.servlet.http.HttpServletRequest";
     String HTTP_SERVLET_RESPONSE_CLASS_NAME = "javax.servlet.http.HttpServletResponse";
+    int UI_LINE_MIN_SIZE = 15;
+    int UI_LINE_PREFER_SIZE = 20;
+    int UI_LINE_MAX_SIZE = 25;
+    int UI_TITLE_SIZE = 30;
+    int UI_MIN_SIZE = 50;
+    int UI_MAX_SIZE = 400;
 }

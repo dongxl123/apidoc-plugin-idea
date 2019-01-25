@@ -23,7 +23,7 @@ public enum ApiDocTag {
     private static final String VERSION_REGEXP = "^(\\d+\\.\\d+\\.\\d+)$";
     private static final String TEXT_REGEXP = "^(.*)$";
     private static final String NAME_TEXT_REGEXP = "^([^\\s]*)\\s*(.+)$";
-    private static final String FIELD_REGEXP = "^(\\([^\\(|^\\)]+\\))?\\s*(\\{[^\\{|^\\}]+\\})?\\s*([^\\s]+)\\s*([^\\s]*)\\s*$";
+    private static final String FIELD_REGEXP = "^(\\([^\\(|^\\)]+\\))?\\s*(\\{[^\\{|^\\}]+\\})?\\s*([^\\s]+)\\s*(.*)$";
     private static final String EXAMPLE_REGEXP = "^([^\\s]+)\\s+(.+)$";
 
     private boolean multiple;

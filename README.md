@@ -21,6 +21,11 @@ Default **Option + Ctrl + Shift + p**(Mac), **Alt + Ctrl + Shift + p** (win)
 
 ## Version Info
 
+v1.1
+> 
+* Optimizing UI Interface 
+* bugFix: field description should support special char `space`
+
 v1.0
 > first version
 * Support UI operation

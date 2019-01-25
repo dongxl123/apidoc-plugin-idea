@@ -70,10 +70,7 @@
       </component>
       <component id="a8b4f" class="com.intellij.ui.components.JBScrollPane" binding="responseBodyPanel" default-binding="true">
         <constraints>
-          <grid row="9" column="1" row-span="1" col-span="2" vsize-policy="7" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
-            <minimum-size width="-1" height="100"/>
-            <preferred-size width="150" height="150"/>
-          </grid>
+          <grid row="9" column="1" row-span="1" col-span="2" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
           <foreground color="-1"/>
@@ -120,19 +117,13 @@
       </component>
       <component id="cbce8" class="com.intellij.ui.components.JBScrollPane" binding="requestParameterPanel" default-binding="true">
         <constraints>
-          <grid row="7" column="1" row-span="1" col-span="2" vsize-policy="7" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-            <minimum-size width="-1" height="50"/>
-            <preferred-size width="150" height="150"/>
-          </grid>
+          <grid row="7" column="1" row-span="1" col-span="2" vsize-policy="7" hsize-policy="7" anchor="8" fill="3" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties/>
       </component>
       <component id="994d3" class="com.intellij.ui.components.JBScrollPane" binding="requestBodyPanel" default-binding="true">
         <constraints>
-          <grid row="8" column="1" row-span="1" col-span="2" vsize-policy="7" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
-            <minimum-size width="-1" height="100"/>
-            <preferred-size width="150" height="150"/>
-          </grid>
+          <grid row="8" column="1" row-span="1" col-span="2" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties/>
       </component>

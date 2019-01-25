@@ -203,10 +203,7 @@ public enum NewDialogModelParseUtils {
     private FieldBean parseFieldBean(PsiField psiField, PsiSubstitutor psiSubstitutor, int depth) {
         FieldBean fieldBean = new FieldBean();
         fieldBean.setName(psiField.getName());
-        PsiType psiType = psiField.getType();
-        if (PsiTypesUtils.INSTANCE.hasGenericTypes(psiType)) {
-            psiType = PsiTypesUtils.INSTANCE.createGenericPsiType(psiType, psiSubstitutor);
-        }
+        PsiType psiType = PsiTypesUtils.INSTANCE.createGenericPsiType(psiField.getType(), psiSubstitutor);
         fieldBean.setType(PsiTypesUtils.INSTANCE.getFieldType(psiType).name());
         fieldBean.setDescription(PsiFieldUtils.INSTANCE.getFieldDescription(psiField));
         if (StringUtils.isBlank(fieldBean.getDescription()) && PsiTypesUtils.INSTANCE.isEnum(psiType)) {
