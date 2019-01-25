@@ -1,9 +1,12 @@
 package com.suiyiwen.plugin.idea.apidoc.utils;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.github.jsonzou.jmockdata.JMockData;
 import com.suiyiwen.plugin.idea.apidoc.bean.dialog.FieldBean;
 import com.suiyiwen.plugin.idea.apidoc.constant.ApiDocConstant;
+import com.suiyiwen.plugin.idea.apidoc.enums.FieldType;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 
@@ -28,7 +31,12 @@ public enum ExampleUtils {
         }
         List<String> parameterList = new ArrayList<>();
         for (String key : o.keySet()) {
-            parameterList.add(String.format("%s=%s", key, JSONObject.toJSONString(o.get(key))));
+            Object v = o.get(key);
+            if (v instanceof String) {
+                parameterList.add(key + ApiDocConstant.CHAR_EQUAL + v);
+            } else {
+                parameterList.add(key + ApiDocConstant.CHAR_EQUAL + JSONObject.toJSONString(v));
+            }
         }
         return StringUtils.join(parameterList, ApiDocConstant.CHAR_AND);
     }
@@ -48,7 +56,12 @@ public enum ExampleUtils {
         JSONObject root = new JSONObject();
         for (FieldBean fieldBean : fieldBeanList) {
             List<FieldBean> childFieldBeanList = fieldBean.getChildFieldList();
-            if (CollectionUtils.isEmpty(childFieldBeanList)) {
+            if (FieldType.Array.name().equals(fieldBean.getType())) {
+                JSONArray jsonArray = new JSONArray();
+                JSONObject o = generateExampleRecursively(childFieldBeanList);
+                jsonArray.add(o);
+                root.put(fieldBean.getName(), jsonArray);
+            } else if (CollectionUtils.isEmpty(childFieldBeanList)) {
                 root.put(fieldBean.getName(), generateDefaultFieldValue(fieldBean));
             } else {
                 JSONObject o = generateExampleRecursively(childFieldBeanList);
@@ -63,7 +76,11 @@ public enum ExampleUtils {
             return null;
         }
         Class cls = ClassUtils.INSTANCE.getClass(fieldBean.getPsiType());
-        return JMockData.mock(cls);
+        try {
+            return JMockData.mock(cls);
+        } catch (Exception e) {
+            return null;
+        }
     }
 
 }

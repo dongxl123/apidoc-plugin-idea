@@ -133,26 +133,26 @@ public class ApiDocGenerateDialog extends DialogWrapper {
             requestParameterPanel.setViewportView(treeTable);
             requestParamsterLines = FieldBeanTreeUtils.INSTANCE.getLines(model.getRequestParameter().getFieldList());
         }
-        requestParameterPanel.setMinimumSize(new Dimension(-1, Math.max(requestParamsterLines * ApiDocConstant.UI_LINE_MIN_SIZE, ApiDocConstant.UI_MIN_SIZE)));
+        requestParameterPanel.setMinimumSize(new Dimension(-1, Math.min(Math.max(requestParamsterLines * ApiDocConstant.UI_LINE_MIN_SIZE, ApiDocConstant.UI_MIN_SIZE), ApiDocConstant.UI_MAX_SIZE)));
         requestParameterPanel.setMaximumSize(new Dimension(-1, Math.min(requestParamsterLines * ApiDocConstant.UI_LINE_MAX_SIZE, ApiDocConstant.UI_MAX_SIZE)));
-        requestParameterPanel.setPreferredSize(new Dimension(-1, Math.max(requestParamsterLines * ApiDocConstant.UI_LINE_PREFER_SIZE, ApiDocConstant.UI_MIN_SIZE)));
+        requestParameterPanel.setPreferredSize(new Dimension(-1, Math.min(requestParamsterLines * ApiDocConstant.UI_LINE_PREFER_SIZE, ApiDocConstant.UI_MAX_SIZE)));
         int requestBodyLines = 0;
         if (model.getRequestBody() != null) {
             JXTreeTable treeTable = TreeTableUtils.INSTANCE.createTreeTable(model.getRequestBody());
             requestBodyPanel.setViewportView(treeTable);
             requestBodyLines = FieldBeanTreeUtils.INSTANCE.getLines(model.getRequestBody().getFieldList());
         }
-        requestBodyPanel.setMinimumSize(new Dimension(-1, Math.max(requestBodyLines * ApiDocConstant.UI_LINE_MIN_SIZE, ApiDocConstant.UI_MIN_SIZE)));
+        requestBodyPanel.setMinimumSize(new Dimension(-1, Math.min(Math.max(requestBodyLines * ApiDocConstant.UI_LINE_MIN_SIZE, ApiDocConstant.UI_MIN_SIZE), ApiDocConstant.UI_MAX_SIZE)));
         requestBodyPanel.setMaximumSize(new Dimension(-1, Math.min(requestBodyLines * ApiDocConstant.UI_LINE_MAX_SIZE, ApiDocConstant.UI_MAX_SIZE)));
-        requestBodyPanel.setPreferredSize(new Dimension(-1, Math.max(requestBodyLines * ApiDocConstant.UI_LINE_PREFER_SIZE, ApiDocConstant.UI_MIN_SIZE)));
+        requestBodyPanel.setPreferredSize(new Dimension(-1, Math.min(requestBodyLines * ApiDocConstant.UI_LINE_PREFER_SIZE, ApiDocConstant.UI_MAX_SIZE)));
         int responseBodyLines = 0;
         if (model.getResponseBody() != null) {
             JXTreeTable treeTable = TreeTableUtils.INSTANCE.createTreeTable(model.getResponseBody());
             responseBodyPanel.setViewportView(treeTable);
             responseBodyLines = FieldBeanTreeUtils.INSTANCE.getLines(model.getResponseBody().getFieldList());
         }
-        responseBodyPanel.setMinimumSize(new Dimension(-1, Math.max(responseBodyLines * ApiDocConstant.UI_LINE_MIN_SIZE, ApiDocConstant.UI_MIN_SIZE)));
+        responseBodyPanel.setMinimumSize(new Dimension(-1, Math.min(Math.max(responseBodyLines * ApiDocConstant.UI_LINE_MIN_SIZE, ApiDocConstant.UI_MIN_SIZE), ApiDocConstant.UI_MAX_SIZE)));
         responseBodyPanel.setMaximumSize(new Dimension(-1, Math.min(responseBodyLines * ApiDocConstant.UI_LINE_MAX_SIZE, ApiDocConstant.UI_MAX_SIZE)));
-        responseBodyPanel.setPreferredSize(new Dimension(-1, Math.max(responseBodyLines * ApiDocConstant.UI_LINE_PREFER_SIZE, ApiDocConstant.UI_MIN_SIZE)));
+        responseBodyPanel.setPreferredSize(new Dimension(-1, Math.min(responseBodyLines * ApiDocConstant.UI_LINE_PREFER_SIZE, ApiDocConstant.UI_MAX_SIZE)));
     }
 }

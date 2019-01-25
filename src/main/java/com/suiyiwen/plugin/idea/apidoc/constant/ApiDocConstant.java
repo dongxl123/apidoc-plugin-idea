@@ -23,6 +23,7 @@ public interface ApiDocConstant {
     String CHAR_DOUBLE_QUOTA = "\"";
     String CHAR_SEPERATOR = "/";
     String CHAR_AND = "&";
+    String CHAR_EQUAL = "=";
     String TAG_TEXT_DEFAULT_TITLE_RESULT_GROUP = "responseBody";
     int OBJECT_RESOLVE_MAX_DEPTH = 4;
     int OBJECT_RESOLVE_DEPTH_START = 1;
@@ -34,10 +35,10 @@ public interface ApiDocConstant {
     String MULTIPART_FILE_CLASS_NAME = "org.springframework.web.multipart.MultipartFile";
     String HTTP_SERVLET_REQUEST_CLASS_NAME = "javax.servlet.http.HttpServletRequest";
     String HTTP_SERVLET_RESPONSE_CLASS_NAME = "javax.servlet.http.HttpServletResponse";
-    int UI_LINE_MIN_SIZE = 15;
+    int UI_LINE_MIN_SIZE = 10;
     int UI_LINE_PREFER_SIZE = 20;
     int UI_LINE_MAX_SIZE = 25;
     int UI_TITLE_SIZE = 30;
     int UI_MIN_SIZE = 50;
-    int UI_MAX_SIZE = 400;
+    int UI_MAX_SIZE = 300;
 }
