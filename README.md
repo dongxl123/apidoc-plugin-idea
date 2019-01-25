@@ -23,6 +23,7 @@ Default **Option + Ctrl + Shift + p**(Mac), **Alt + Ctrl + Shift + p** (win)
 
 v1.1
 > 
+* Support Auto Generate Example Data
 * Optimizing UI Interface 
 * bugFix: field description should support special char `space`
 

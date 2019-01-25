@@ -1,5 +1,6 @@
 package com.suiyiwen.plugin.idea.apidoc.bean.dialog;
 
+import com.intellij.psi.PsiType;
 import com.suiyiwen.plugin.idea.apidoc.ui.tree.CellProvider;
 import com.suiyiwen.plugin.idea.apidoc.ui.tree.Selector;
 import lombok.Getter;
@@ -21,6 +22,7 @@ public class FieldBean implements Selector, CellProvider, Serializable {
     private String description;
     private List<FieldBean> childFieldList;
     private transient boolean checked = true;
+    private transient PsiType psiType;
 
     @Override
     public String getCellTitle(int index) {

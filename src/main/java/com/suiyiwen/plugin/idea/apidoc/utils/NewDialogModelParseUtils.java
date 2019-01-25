@@ -127,6 +127,7 @@ public enum NewDialogModelParseUtils {
             FieldBean fieldBean = new FieldBean();
             fieldBean.setName(ApiDocConstant.STRING_RESULT);
             fieldBean.setType(PsiTypesUtils.INSTANCE.getFieldType(psiType).name());
+            fieldBean.setPsiType(psiType);
             if (PsiTypesUtils.INSTANCE.isEnum(psiType)) {
                 fieldBean.setDescription(PsiTypesUtils.INSTANCE.generateEnumDescription(psiType));
             }
@@ -153,6 +154,7 @@ public enum NewDialogModelParseUtils {
                 FieldBean fieldBean = new FieldBean();
                 fieldBean.setName(psiParameter.getName());
                 fieldBean.setType(PsiTypesUtils.INSTANCE.getFieldType(psiType).name());
+                fieldBean.setPsiType(psiType);
                 if (PsiTypesUtils.INSTANCE.isEnum(psiType)) {
                     fieldBean.setDescription(PsiTypesUtils.INSTANCE.generateEnumDescription(psiType));
                 }
@@ -205,6 +207,7 @@ public enum NewDialogModelParseUtils {
         fieldBean.setName(psiField.getName());
         PsiType psiType = PsiTypesUtils.INSTANCE.createGenericPsiType(psiField.getType(), psiSubstitutor);
         fieldBean.setType(PsiTypesUtils.INSTANCE.getFieldType(psiType).name());
+        fieldBean.setPsiType(psiType);
         fieldBean.setDescription(PsiFieldUtils.INSTANCE.getFieldDescription(psiField));
         if (StringUtils.isBlank(fieldBean.getDescription()) && PsiTypesUtils.INSTANCE.isEnum(psiType)) {
             fieldBean.setDescription(PsiTypesUtils.INSTANCE.generateEnumDescription(psiType));

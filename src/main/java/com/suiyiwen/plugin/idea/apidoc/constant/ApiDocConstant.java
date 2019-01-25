@@ -22,6 +22,7 @@ public interface ApiDocConstant {
     String CHAR_COMMA = ",";
     String CHAR_DOUBLE_QUOTA = "\"";
     String CHAR_SEPERATOR = "/";
+    String CHAR_AND = "&";
     String TAG_TEXT_DEFAULT_TITLE_RESULT_GROUP = "responseBody";
     int OBJECT_RESOLVE_MAX_DEPTH = 4;
     int OBJECT_RESOLVE_DEPTH_START = 1;

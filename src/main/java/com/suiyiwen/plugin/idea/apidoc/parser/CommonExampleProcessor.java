@@ -1,5 +1,6 @@
 package com.suiyiwen.plugin.idea.apidoc.parser;
 
+import com.suiyiwen.plugin.idea.apidoc.constant.ApiDocConstant;
 import com.suiyiwen.plugin.idea.apidoc.enums.JavaDocElements;
 import com.suiyiwen.plugin.idea.apidoc.bean.apidoc.AbstractApiExample;
 import com.suiyiwen.plugin.idea.apidoc.bean.apidoc.ApiDocElement;
@@ -32,7 +33,7 @@ public class CommonExampleProcessor extends AbstractTagProcessor {
         if (element instanceof AbstractApiExample) {
             AbstractApiExample tElement = (AbstractApiExample) element;
             StringBuilder sb = new StringBuilder();
-            sb.append(StringUtils.trimToEmpty(tElement.getTitle()));
+            sb.append(StringUtils.trimToEmpty(tElement.getTitle()) + ApiDocConstant.TAG_GROUP_EXAMPLE_TITLE_SUFFIX);
             sb.append(JavaDocElements.NEW_LINE.getPresentation()).append(StringUtils.trimToEmpty(tElement.getExample()));
             return sb.toString();
         }

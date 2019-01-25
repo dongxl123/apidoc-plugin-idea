@@ -5,9 +5,7 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiMethod;
 import com.intellij.psi.javadoc.PsiDocComment;
 import com.suiyiwen.plugin.idea.apidoc.bean.apidoc.ApiDocCommentBean;
-import com.suiyiwen.plugin.idea.apidoc.bean.dialog.AbstractExampleBean;
-import com.suiyiwen.plugin.idea.apidoc.bean.dialog.DialogModel;
-import com.suiyiwen.plugin.idea.apidoc.bean.dialog.FieldBean;
+import com.suiyiwen.plugin.idea.apidoc.bean.dialog.*;
 import com.suiyiwen.plugin.idea.apidoc.component.operation.JavaDocWriter;
 import com.suiyiwen.plugin.idea.apidoc.constant.ApiDocConstant;
 import com.suiyiwen.plugin.idea.apidoc.ui.ApiDocGenerateDialog;
@@ -42,23 +40,35 @@ public enum DialogHelper {
     }
 
     public void writeJavaDoc(DialogModel model, PsiElement psiElement) {
-        filterDialogModel(model);
+        processDialogModel(model);
         PsiDocComment javaDoc = PsiDocCommentUtils.INSTANCE.createPsiDocComment(buildCommentText(model));
         writer.write(javaDoc, psiElement);
     }
 
-    private void filterDialogModel(DialogModel model) {
+    private void processDialogModel(DialogModel model) {
         if (model == null) {
             return;
         }
-        if (model.getRequestParameter() != null) {
-            filterDialogModelFieldBeanRecursively(model.getRequestParameter().getFieldList());
+        ParamBean requestParameter = model.getRequestParameter();
+        if (requestParameter != null) {
+            filterDialogModelFieldBeanRecursively(requestParameter.getFieldList());
+            if (StringUtils.isBlank(requestParameter.getExample())) {
+                requestParameter.setExample(ExampleUtils.INSTANCE.generateRequestExampleString(requestParameter.getFieldList()));
+            }
         }
-        if (model.getRequestBody() != null) {
-            filterDialogModelFieldBeanRecursively(model.getRequestBody().getFieldList());
+        ParamBean requestBody = model.getRequestBody();
+        if (requestBody != null) {
+            filterDialogModelFieldBeanRecursively(requestBody.getFieldList());
+            if (StringUtils.isBlank(requestBody.getExample())) {
+                requestBody.setExample(ExampleUtils.INSTANCE.generateExampleString(requestBody.getFieldList()));
+            }
         }
-        if (model.getResponseBody() != null) {
-            filterDialogModelFieldBeanRecursively(model.getResponseBody().getFieldList());
+        ResultBean responseBody = model.getResponseBody();
+        if (responseBody != null) {
+            filterDialogModelFieldBeanRecursively(responseBody.getFieldList());
+            if (StringUtils.isBlank(responseBody.getExample())) {
+                responseBody.setExample(ExampleUtils.INSTANCE.generateExampleString(responseBody.getFieldList()));
+            }
         }
     }
 
