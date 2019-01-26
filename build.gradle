@@ -18,7 +18,7 @@ tasks.withType(JavaCompile) {
 }
 
 group 'com.suiyiwen.plugin.idea'
-version '1.1'
+version '1.2'
 
 repositories {
     mavenLocal()
@@ -37,5 +37,5 @@ dependencies {
     compile 'com.alibaba:fastjson:1.2.45'
     compileOnly 'org.projectlombok:lombok:1.16.18'
     testCompile 'junit:junit:4.12'
-    compile('com.github.jsonzou:jmockdata:3.1.0')
+    compile 'com.github.jsonzou:jmockdata:3.1.0'
 }

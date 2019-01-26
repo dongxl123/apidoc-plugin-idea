@@ -39,6 +39,7 @@ public class ApiDocGenerateDialog extends DialogWrapper {
         this.psiElement = psiElement;
         init();
         setTitle(ApiDocConstant.TITLE_GENERATE_DIALOG);
+        setSize(800, 800);
     }
 
     @Nullable
@@ -127,15 +128,15 @@ public class ApiDocGenerateDialog extends DialogWrapper {
         if (StringUtils.isNotBlank(model.getRequestMethod())) {
             requestMethodComboBox.setSelectedItem(model.getRequestMethod());
         }
-        int requestParamsterLines = 0;
+        int requestParameterLines = 0;
         if (model.getRequestParameter() != null) {
             JXTreeTable treeTable = TreeTableUtils.INSTANCE.createTreeTable(model.getRequestParameter());
             requestParameterPanel.setViewportView(treeTable);
-            requestParamsterLines = FieldBeanTreeUtils.INSTANCE.getLines(model.getRequestParameter().getFieldList());
+            requestParameterLines = FieldBeanTreeUtils.INSTANCE.getLines(model.getRequestParameter().getFieldList());
         }
-        requestParameterPanel.setMinimumSize(new Dimension(-1, Math.min(Math.max(requestParamsterLines * ApiDocConstant.UI_LINE_MIN_SIZE, ApiDocConstant.UI_MIN_SIZE), ApiDocConstant.UI_MAX_SIZE)));
-        requestParameterPanel.setMaximumSize(new Dimension(-1, Math.min(requestParamsterLines * ApiDocConstant.UI_LINE_MAX_SIZE, ApiDocConstant.UI_MAX_SIZE)));
-        requestParameterPanel.setPreferredSize(new Dimension(-1, Math.min(requestParamsterLines * ApiDocConstant.UI_LINE_PREFER_SIZE, ApiDocConstant.UI_MAX_SIZE)));
+        requestParameterPanel.setMinimumSize(new Dimension(-1, Math.min(Math.max(requestParameterLines * ApiDocConstant.UI_LINE_MIN_SIZE, ApiDocConstant.UI_MIN_SIZE), ApiDocConstant.UI_MAX_SIZE)));
+        requestParameterPanel.setMaximumSize(new Dimension(-1, Math.min(requestParameterLines * ApiDocConstant.UI_LINE_MAX_SIZE, ApiDocConstant.UI_MAX_SIZE)));
+        requestParameterPanel.setPreferredSize(new Dimension(-1, Math.min(requestParameterLines * ApiDocConstant.UI_LINE_PREFER_SIZE, ApiDocConstant.UI_MAX_SIZE)));
         int requestBodyLines = 0;
         if (model.getRequestBody() != null) {
             JXTreeTable treeTable = TreeTableUtils.INSTANCE.createTreeTable(model.getRequestBody());

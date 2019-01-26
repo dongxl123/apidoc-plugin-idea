@@ -45,12 +45,16 @@ public enum TreeTableUtils {
     }
 
     private TreeTableModel createTreeTableModel(AbstractExampleBean exampleBean) {
-        if (exampleBean == null || CollectionUtils.isEmpty(exampleBean.getFieldList())) {
-            return null;
-        }
         FieldBean rootFieldBean = new FieldBean();
         rootFieldBean.setName("root");
-        rootFieldBean.setChildFieldList(exampleBean.getFieldList());
+        List<FieldBean> childFieldList = new ArrayList<>();
+        FieldBean baseBean = new FieldBean();
+        baseBean.setName("全选");
+        if (exampleBean != null) {
+            baseBean.setChildFieldList(exampleBean.getFieldList());
+        }
+        childFieldList.add(baseBean);
+        rootFieldBean.setChildFieldList(childFieldList);
         TreeTableNode root = createdTreeNode(rootFieldBean);
         TreeTableModel treeTableModel = new FiledTreeTableModel(root);
         return treeTableModel;

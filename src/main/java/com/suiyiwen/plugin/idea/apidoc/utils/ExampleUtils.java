@@ -3,15 +3,22 @@ package com.suiyiwen.plugin.idea.apidoc.utils;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.serializer.DoubleSerializer;
+import com.alibaba.fastjson.serializer.SerializeConfig;
 import com.github.jsonzou.jmockdata.JMockData;
+import com.intellij.psi.*;
+import com.intellij.psi.impl.source.PsiClassReferenceType;
 import com.suiyiwen.plugin.idea.apidoc.bean.dialog.FieldBean;
 import com.suiyiwen.plugin.idea.apidoc.constant.ApiDocConstant;
 import com.suiyiwen.plugin.idea.apidoc.enums.FieldType;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Random;
 
 /**
  * @author dongxuanliang252
@@ -20,6 +27,11 @@ import java.util.List;
 public enum ExampleUtils {
 
     INSTANCE;
+
+    static {
+        SerializeConfig config = SerializeConfig.getGlobalInstance();
+        config.put(Double.class, new DoubleSerializer("#.##"));
+    }
 
     public String generateRequestExampleString(List<FieldBean> fieldBeanList) {
         if (CollectionUtils.isEmpty(fieldBeanList)) {
@@ -32,11 +44,20 @@ public enum ExampleUtils {
         List<String> parameterList = new ArrayList<>();
         for (String key : o.keySet()) {
             Object v = o.get(key);
-            if (v instanceof String) {
-                parameterList.add(key + ApiDocConstant.CHAR_EQUAL + v);
+            String psv;
+            if (v instanceof String || v instanceof Character) {
+                psv = String.valueOf(v);
+            } else if (v instanceof Iterable) {
+                Iterator itr = ((Iterable) v).iterator();
+                List<String> strList = new ArrayList<>();
+                if (itr.hasNext()) {
+                    strList.add(String.valueOf(itr.next()));
+                }
+                psv = StringUtils.join(strList, ApiDocConstant.CHAR_COMMA);
             } else {
-                parameterList.add(key + ApiDocConstant.CHAR_EQUAL + JSONObject.toJSONString(v));
+                psv = JSONObject.toJSONString(v);
             }
+            parameterList.add(key + ApiDocConstant.CHAR_EQUAL + psv);
         }
         return StringUtils.join(parameterList, ApiDocConstant.CHAR_AND);
     }
@@ -58,11 +79,24 @@ public enum ExampleUtils {
             List<FieldBean> childFieldBeanList = fieldBean.getChildFieldList();
             if (FieldType.Array.name().equals(fieldBean.getType())) {
                 JSONArray jsonArray = new JSONArray();
-                JSONObject o = generateExampleRecursively(childFieldBeanList);
-                jsonArray.add(o);
+                if (CollectionUtils.isEmpty(childFieldBeanList)) {
+                    Object defaultFieldValue = generateDefaultFieldValue(fieldBean);
+                    if (defaultFieldValue != null) {
+                        jsonArray = JSONArray.parseArray(JSON.toJSONString(defaultFieldValue));
+                        if (jsonArray != null && jsonArray.size() > 2) {
+                            jsonArray = new JSONArray(jsonArray.subList(0, 2));
+                        }
+                    }
+                } else {
+                    JSONObject o = generateExampleRecursively(childFieldBeanList);
+                    if (o != null) {
+                        jsonArray.add(o);
+                    }
+                }
                 root.put(fieldBean.getName(), jsonArray);
             } else if (CollectionUtils.isEmpty(childFieldBeanList)) {
-                root.put(fieldBean.getName(), generateDefaultFieldValue(fieldBean));
+                Object defaultFieldValue = generateDefaultFieldValue(fieldBean);
+                root.put(fieldBean.getName(), defaultFieldValue);
             } else {
                 JSONObject o = generateExampleRecursively(childFieldBeanList);
                 root.put(fieldBean.getName(), o);
@@ -72,13 +106,57 @@ public enum ExampleUtils {
     }
 
     private Object generateDefaultFieldValue(FieldBean fieldBean) {
-        if (fieldBean == null || fieldBean.getPsiType() == null) {
+        if (fieldBean == null || fieldBean.getPsiType() == null || CollectionUtils.isNotEmpty(fieldBean.getChildFieldList())) {
             return null;
         }
-        Class cls = ClassUtils.INSTANCE.getClass(fieldBean.getPsiType());
+        //对于ITERABLE特殊处理
+        PsiType psiType = fieldBean.getPsiType();
+        if (PsiTypesUtils.INSTANCE.isIterable(psiType)) {
+            List<Object> array = new ArrayList<>();
+            PsiType[] genericPsiTypes = ((PsiClassType) psiType).getParameters();
+            if (ArrayUtils.isNotEmpty(genericPsiTypes)) {
+                PsiType innerPsiType = genericPsiTypes[0];
+                Object o = generateDefaultFieldValue(innerPsiType);
+                if (o != null) {
+                    array.add(o);
+                }
+            }
+            return array;
+        }
+        return generateDefaultFieldValue(psiType);
+    }
+
+    private Object generateDefaultFieldValue(PsiType psiType) {
+        //ENUM 特殊处理
+        if (PsiTypesUtils.INSTANCE.isEnum(psiType)) {
+            List<String> enumStrList = new ArrayList<>();
+            PsiClass psiClass = ((PsiClassReferenceType) psiType).resolve();
+            for (PsiField psiField : psiClass.getFields()) {
+                if (psiField instanceof PsiEnumConstant) {
+                    enumStrList.add(psiField.getNameIdentifier().getText().trim());
+                }
+            }
+            if (CollectionUtils.isNotEmpty(enumStrList)) {
+                Random random = new Random(System.currentTimeMillis());
+                return enumStrList.get(random.nextInt(enumStrList.size()));
+            }
+            return StringUtils.EMPTY;
+        }
+        Class cls = ClassUtils.INSTANCE.getClass(psiType);
+        if (cls == null) {
+            return null;
+        }
         try {
-            return JMockData.mock(cls);
-        } catch (Exception e) {
+            Object v = JMockData.mock(cls);
+            if (v == null && FieldType.Array.name().equals(psiType)) {
+                return ArrayUtils.EMPTY_OBJECT_ARRAY;
+            }
+            return v;
+        } catch (
+                Exception e) {
+            if (FieldType.Array.name().equals(psiType)) {
+                return ArrayUtils.EMPTY_OBJECT_ARRAY;
+            }
             return null;
         }
     }

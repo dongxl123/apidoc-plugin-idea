@@ -21,6 +21,11 @@ Default **Option + Ctrl + Shift + p**(Mac), **Alt + Ctrl + Shift + p** (win)
 
 ## Version Info
 
+v1.2
+> 
+* Optimizing Example Data Generation
+* Optimizing UI Interface 
+
 v1.1
 > 
 * Support Auto Generate Example Data

@@ -26,7 +26,7 @@ public enum ClassUtils {
         try {
             return org.apache.commons.lang3.ClassUtils.getClass(text);
         } catch (ClassNotFoundException e) {
-            return Object.class;
+            return null;
         }
     }
 

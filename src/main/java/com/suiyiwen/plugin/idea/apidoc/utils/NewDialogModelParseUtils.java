@@ -122,17 +122,6 @@ public enum NewDialogModelParseUtils {
             return null;
         }
         List<FieldBean> innerChildFieldList = parseRefFieldBeanList(psiType);
-        if (CollectionUtils.isEmpty(innerChildFieldList)) {
-            innerChildFieldList = new ArrayList<>();
-            FieldBean fieldBean = new FieldBean();
-            fieldBean.setName(ApiDocConstant.STRING_RESULT);
-            fieldBean.setType(PsiTypesUtils.INSTANCE.getFieldType(psiType).name());
-            fieldBean.setPsiType(psiType);
-            if (PsiTypesUtils.INSTANCE.isEnum(psiType)) {
-                fieldBean.setDescription(PsiTypesUtils.INSTANCE.generateEnumDescription(psiType));
-            }
-            innerChildFieldList.add(fieldBean);
-        }
         exampleBean.setTitle(title);
         exampleBean.setFieldList(innerChildFieldList);
         return exampleBean;
