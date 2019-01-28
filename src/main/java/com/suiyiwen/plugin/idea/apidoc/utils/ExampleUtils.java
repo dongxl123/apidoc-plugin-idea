@@ -78,8 +78,8 @@ public enum ExampleUtils {
         if (o == null) {
             return null;
         }
-        if (o.size() == 1 && o.containsKey(ApiDocConstant.STRING_RESULT)) {
-            return JSONObject.toJSONString(o.get(ApiDocConstant.STRING_RESULT));
+        if (o.size() == 1 && o.containsKey(ApiDocConstant.STRING_RESPONSE)) {
+            return JSONObject.toJSONString(o.get(ApiDocConstant.STRING_RESPONSE));
         }
         return JSONObject.toJSONString(o);
     }

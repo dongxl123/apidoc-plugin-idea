@@ -31,7 +31,7 @@ public interface ApiDocConstant {
     String TAG_REQUEST_BODY_GROUP_TITLE = "请求体";
     String TAG_RESPONSE_BODY_GROUP_TITLE = "响应结果";
     String TAG_GROUP_EXAMPLE_TITLE_SUFFIX = "示例";
-    String STRING_RESULT = "result";
+    String STRING_RESPONSE = "response";
     String MULTIPART_FILE_CLASS_NAME = "org.springframework.web.multipart.MultipartFile";
     String HTTP_SERVLET_REQUEST_CLASS_NAME = "javax.servlet.http.HttpServletRequest";
     String HTTP_SERVLET_RESPONSE_CLASS_NAME = "javax.servlet.http.HttpServletResponse";

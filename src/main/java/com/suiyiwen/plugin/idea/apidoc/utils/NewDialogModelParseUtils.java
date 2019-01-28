@@ -122,7 +122,7 @@ public enum NewDialogModelParseUtils {
             return null;
         }
         FieldBean rootFieldBean = new FieldBean();
-        rootFieldBean.setName(ApiDocConstant.STRING_RESULT);
+        rootFieldBean.setName(ApiDocConstant.STRING_RESPONSE);
         rootFieldBean.setType(PsiTypesUtils.INSTANCE.getFieldType(psiType).name());
         rootFieldBean.setPsiType(psiType);
         if (PsiTypesUtils.INSTANCE.isEnum(psiType)) {
