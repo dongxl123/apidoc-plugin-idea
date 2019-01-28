@@ -14,7 +14,11 @@
     ]]></description>
 
     <change-notes><![CDATA[
-
+    <h2>v1.3</h2>
+    <ul>
+      <li>bugFix: responseBody field support special psiType, eg. BigInteger, iterable class...</li>
+      <li>bugFix: remove Deprecated field</li>
+    </ul>
     <h2>v1.2</h2>
     <ul>
       <li>Optimizing Example Data Generation</li>

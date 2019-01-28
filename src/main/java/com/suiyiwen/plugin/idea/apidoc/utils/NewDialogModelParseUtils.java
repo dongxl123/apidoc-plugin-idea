@@ -121,9 +121,25 @@ public enum NewDialogModelParseUtils {
         if (psiType == null) {
             return null;
         }
+        FieldBean rootFieldBean = new FieldBean();
+        rootFieldBean.setName(ApiDocConstant.STRING_RESULT);
+        rootFieldBean.setType(PsiTypesUtils.INSTANCE.getFieldType(psiType).name());
+        rootFieldBean.setPsiType(psiType);
+        if (PsiTypesUtils.INSTANCE.isEnum(psiType)) {
+            rootFieldBean.setDescription(PsiTypesUtils.INSTANCE.generateEnumDescription(psiType));
+        }
         List<FieldBean> innerChildFieldList = parseRefFieldBeanList(psiType);
+        List<FieldBean> retChildFieldList = new ArrayList<>();
+        if (PsiTypesUtils.INSTANCE.isIterable(psiType)) {
+            rootFieldBean.setChildFieldList(innerChildFieldList);
+            retChildFieldList.add(rootFieldBean);
+        } else if (CollectionUtils.isEmpty(innerChildFieldList)) {
+            retChildFieldList.add(rootFieldBean);
+        } else {
+            retChildFieldList = innerChildFieldList;
+        }
         exampleBean.setTitle(title);
-        exampleBean.setFieldList(innerChildFieldList);
+        exampleBean.setFieldList(retChildFieldList);
         return exampleBean;
     }
 
@@ -164,7 +180,7 @@ public enum NewDialogModelParseUtils {
             depth++;
         }
         List<FieldBean> innerChildFieldList = new ArrayList<>();
-        //boxedType, String, enum, map, primitiveType
+        //boxedType, String, enum, map, primitiveType,number,Character,CharSequence,Boolean,Date
         if (PsiTypesUtils.INSTANCE.isExtractEndPsiType(psiType)) {
             //不处理
         } else if (PsiTypesUtils.INSTANCE.isIterable(psiType)) {

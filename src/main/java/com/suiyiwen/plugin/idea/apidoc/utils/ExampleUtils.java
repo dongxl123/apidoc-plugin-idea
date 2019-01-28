@@ -33,7 +33,7 @@ public enum ExampleUtils {
         config.put(Double.class, new DoubleSerializer("#.##"));
     }
 
-    public String generateRequestExampleString(List<FieldBean> fieldBeanList) {
+    public String generateRequestParameterExampleString(List<FieldBean> fieldBeanList) {
         if (CollectionUtils.isEmpty(fieldBeanList)) {
             return null;
         }
@@ -62,11 +62,25 @@ public enum ExampleUtils {
         return StringUtils.join(parameterList, ApiDocConstant.CHAR_AND);
     }
 
-    public String generateExampleString(List<FieldBean> fieldBeanList) {
+    public String generateRequestBodyExampleString(List<FieldBean> fieldBeanList) {
         if (CollectionUtils.isEmpty(fieldBeanList)) {
             return null;
         }
         JSONObject o = generateExampleRecursively(fieldBeanList);
+        return JSONObject.toJSONString(o);
+    }
+
+    public String generateResponseBodyExampleString(List<FieldBean> fieldBeanList) {
+        if (CollectionUtils.isEmpty(fieldBeanList)) {
+            return null;
+        }
+        JSONObject o = generateExampleRecursively(fieldBeanList);
+        if (o == null) {
+            return null;
+        }
+        if (o.size() == 1 && o.containsKey(ApiDocConstant.STRING_RESULT)) {
+            return JSONObject.toJSONString(o.get(ApiDocConstant.STRING_RESULT));
+        }
         return JSONObject.toJSONString(o);
     }
 

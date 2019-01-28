@@ -21,6 +21,11 @@ Default **Option + Ctrl + Shift + p**(Mac), **Alt + Ctrl + Shift + p** (win)
 
 ## Version Info
 
+v1.3
+> 
+* bugFix: responseBody field support special psiType, eg. BigInteger, iterable class...
+* bugFix: remove Deprecated field 
+
 v1.2
 > 
 * Optimizing Example Data Generation

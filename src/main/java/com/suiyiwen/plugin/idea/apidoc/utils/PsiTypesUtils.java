@@ -23,7 +23,7 @@ public enum PsiTypesUtils {
 
     INSTANCE;
 
-    private final String JAVA_LANG_CHARSEQUENCE = "java.lang.CharSequence";
+    private final String JAVA_LANG_CHAR_SEQUENCE = "java.lang.CharSequence";
 
     private static final List<String> boxedTypes = new ArrayList<>();
 
@@ -72,7 +72,8 @@ public enum PsiTypesUtils {
 
     public boolean isExtractEndPsiType(PsiType psiType) {
         if (psiType instanceof PsiClassType) {
-            if (PsiTypesUtils.INSTANCE.isBoxedType(psiType) || PsiTypesUtils.INSTANCE.isString(psiType) || PsiTypesUtils.INSTANCE.isMap(psiType) || PsiTypesUtils.INSTANCE.isEnum(psiType)) {
+            if (isBoxedType(psiType) || isString(psiType) || isMap(psiType) || isEnum(psiType) || isNumber(psiType)
+                    || isCharacter(psiType) || isCharSequence(psiType) || isBoolean(psiType) || isDate(psiType)) {
                 return true;
             }
         } else if (psiType instanceof PsiPrimitiveType) {
@@ -120,7 +121,7 @@ public enum PsiTypesUtils {
     }
 
     public boolean isCharSequence(PsiType psiType) {
-        return isAssignableFrom(JAVA_LANG_CHARSEQUENCE, psiType);
+        return isAssignableFrom(JAVA_LANG_CHAR_SEQUENCE, psiType);
     }
 
     public boolean isCharacter(PsiType psiType) {

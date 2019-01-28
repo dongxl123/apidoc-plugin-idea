@@ -53,21 +53,21 @@ public enum DialogHelper {
         if (requestParameter != null) {
             filterDialogModelFieldBeanRecursively(requestParameter.getFieldList());
             if (StringUtils.isBlank(requestParameter.getExample())) {
-                requestParameter.setExample(ExampleUtils.INSTANCE.generateRequestExampleString(requestParameter.getFieldList()));
+                requestParameter.setExample(ExampleUtils.INSTANCE.generateRequestParameterExampleString(requestParameter.getFieldList()));
             }
         }
         ParamBean requestBody = model.getRequestBody();
         if (requestBody != null) {
             filterDialogModelFieldBeanRecursively(requestBody.getFieldList());
             if (StringUtils.isBlank(requestBody.getExample())) {
-                requestBody.setExample(ExampleUtils.INSTANCE.generateExampleString(requestBody.getFieldList()));
+                requestBody.setExample(ExampleUtils.INSTANCE.generateRequestBodyExampleString(requestBody.getFieldList()));
             }
         }
         ResultBean responseBody = model.getResponseBody();
         if (responseBody != null) {
             filterDialogModelFieldBeanRecursively(responseBody.getFieldList());
             if (StringUtils.isBlank(responseBody.getExample())) {
-                responseBody.setExample(ExampleUtils.INSTANCE.generateExampleString(responseBody.getFieldList()));
+                responseBody.setExample(ExampleUtils.INSTANCE.generateResponseBodyExampleString(responseBody.getFieldList()));
             }
         }
     }

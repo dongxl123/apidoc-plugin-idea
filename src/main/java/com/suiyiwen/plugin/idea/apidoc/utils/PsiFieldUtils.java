@@ -16,7 +16,7 @@ public enum PsiFieldUtils {
 
     public boolean isVariable(PsiField psiField) {
         PsiModifierList psiModifierList = psiField.getModifierList();
-        if (psiModifierList.hasModifierProperty(PsiModifier.PUBLIC) || psiModifierList.hasModifierProperty(PsiModifier.STATIC) || psiModifierList.hasModifierProperty(PsiModifier.FINAL) || psiModifierList.hasModifierProperty(PsiModifier.TRANSIENT)) {
+        if (psiField.isDeprecated() || psiModifierList.hasModifierProperty(PsiModifier.PUBLIC) || psiModifierList.hasModifierProperty(PsiModifier.STATIC) || psiModifierList.hasModifierProperty(PsiModifier.FINAL) || psiModifierList.hasModifierProperty(PsiModifier.TRANSIENT)) {
             return false;
         }
         return true;

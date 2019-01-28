@@ -24,6 +24,9 @@ public enum ClassUtils {
     public Class getClass(PsiType psiType) {
         String text = psiType.getCanonicalText();
         try {
+            if (PsiTypesUtils.INSTANCE.isMap(psiType)) {
+                return Object.class;
+            }
             return org.apache.commons.lang3.ClassUtils.getClass(text);
         } catch (ClassNotFoundException e) {
             return null;
