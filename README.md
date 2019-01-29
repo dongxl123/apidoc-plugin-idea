@@ -23,7 +23,7 @@ Default **Option + Ctrl + Shift + p**(Mac), **Alt + Ctrl + Shift + p** (win)
 
 v1.3
 > 
-* Support IDEA earlier version since 2016.2.5
+* Support IDEA earlier version since 162+
 * bugFix: responseBody field support special psiType, eg. BigInteger, iterable class...
 * bugFix: remove Deprecated field 
 
