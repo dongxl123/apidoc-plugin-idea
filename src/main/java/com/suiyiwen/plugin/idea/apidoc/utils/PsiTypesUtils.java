@@ -5,11 +5,9 @@ import com.intellij.openapi.actionSystem.CommonDataKeys;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.*;
 import com.intellij.psi.impl.source.PsiClassReferenceType;
-import com.intellij.psi.util.ClassUtil;
 import com.suiyiwen.plugin.idea.apidoc.enums.FieldType;
 import com.suiyiwen.plugin.idea.apidoc.enums.JavaDocElements;
 import org.apache.commons.collections.MapUtils;
-import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
