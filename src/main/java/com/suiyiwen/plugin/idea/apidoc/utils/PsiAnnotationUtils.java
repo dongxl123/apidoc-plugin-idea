@@ -1,9 +1,6 @@
 package com.suiyiwen.plugin.idea.apidoc.utils;
 
-import com.intellij.psi.PsiAnnotation;
-import com.intellij.psi.PsiAnnotationMemberValue;
-import com.intellij.psi.PsiClass;
-import com.intellij.psi.PsiType;
+import com.intellij.psi.*;
 import com.intellij.psi.impl.source.PsiClassReferenceType;
 import com.intellij.util.containers.ArrayListSet;
 import com.suiyiwen.plugin.idea.apidoc.constant.ApiDocConstant;
@@ -47,16 +44,24 @@ public enum PsiAnnotationUtils {
             if (psiClass == null) {
                 return false;
             }
-            if (psiClass.hasAnnotation(supperFQClassName)) {
+            if (hasAnnotation(psiClass.getModifierList(), supperFQClassName)) {
                 return true;
             }
-            for (PsiAnnotation superAnnotation : psiClass.getAnnotations()) {
+            for (PsiAnnotation superAnnotation : psiClass.getModifierList().getAnnotations()) {
                 if (isAssignableFrom(supperFQClassName, superAnnotation, annotationCaches)) {
                     return true;
                 }
             }
         }
         return false;
+    }
+
+    public boolean hasAnnotation(PsiModifierList psiModifierList, String fqClassName) {
+        if (psiModifierList == null || StringUtils.isBlank(fqClassName)) {
+            return false;
+        }
+        PsiAnnotation psiAnnotation = psiModifierList.findAnnotation(fqClassName);
+        return psiAnnotation != null;
     }
 
 }

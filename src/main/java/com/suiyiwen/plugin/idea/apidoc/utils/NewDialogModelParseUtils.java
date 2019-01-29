@@ -76,10 +76,10 @@ public enum NewDialogModelParseUtils {
         if (psiParameter == null) {
             return false;
         }
-        if (psiParameter.hasAnnotation(AnnotationClass.REQUEST_PARAM.getClassName())) {
+        if (PsiAnnotationUtils.INSTANCE.hasAnnotation(psiParameter.getModifierList(), AnnotationClass.REQUEST_PARAM.getClassName())) {
             return true;
         }
-        if (ArrayUtils.isEmpty(psiParameter.getAnnotations())) {
+        if (ArrayUtils.isEmpty(psiParameter.getModifierList().getAnnotations())) {
             if (PsiTypesUtils.INSTANCE.isAssignableFrom(ApiDocConstant.HTTP_SERVLET_REQUEST_CLASS_NAME, psiParameter.getType())) {
                 return false;
             }
@@ -101,7 +101,7 @@ public enum NewDialogModelParseUtils {
         List<PsiParameter> requestBodyTypeList = new ArrayList<>();
 
         for (PsiParameter psiParameter : element.getParameterList().getParameters()) {
-            if (psiParameter.hasAnnotation(AnnotationClass.REQUEST_BODY.getClassName())) {
+            if (PsiAnnotationUtils.INSTANCE.hasAnnotation(psiParameter.getModifierList(), AnnotationClass.REQUEST_BODY.getClassName())) {
                 requestBodyTypeList.add(psiParameter);
             }
         }

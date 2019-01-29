@@ -1,7 +1,7 @@
 ApiDoc
 ---
 
-* This is a plugin you can generate apidoc from public method.
+* This is a plugin you can generate apiDoc from request in controller.
 * Please do aware **This plugin is only for IntelliJ IDEA**.
 * This plugin develop for the npm model `apidoc`, [HomePage](https://www.npmjs.com/package/apidoc), install command `npm i apidoc` 
 
@@ -23,6 +23,7 @@ Default **Option + Ctrl + Shift + p**(Mac), **Alt + Ctrl + Shift + p** (win)
 
 v1.3
 > 
+* Support IDEA earlier version since 2016.2.5
 * bugFix: responseBody field support special psiType, eg. BigInteger, iterable class...
 * bugFix: remove Deprecated field 
 

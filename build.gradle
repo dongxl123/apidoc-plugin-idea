@@ -9,7 +9,8 @@ sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
 
 intellij {
-    version 'IC-2018.2.1'
+    version 'IC-2016.2.5'
+    //version 'IC-2018.2.1'
     pluginName 'apiDoc'
 }
 
@@ -38,5 +39,6 @@ dependencies {
     compileOnly 'org.projectlombok:lombok:1.16.18'
     testCompile 'junit:junit:4.12'
     compile 'com.github.jsonzou:jmockdata:3.1.0'
+    compile 'org.apache.commons:commons-lang3:3.7'
     compile 'commons-collections:commons-collections:3.2.2'
 }

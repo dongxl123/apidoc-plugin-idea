@@ -25,7 +25,7 @@ public enum PsiHttpUtils {
         if (element == null) {
             return null;
         }
-        PsiAnnotation[] annotations = element.getAnnotations();
+        PsiAnnotation[] annotations = element.getModifierList().getAnnotations();
         //从attribute annotation分析
         if (ArrayUtils.isNotEmpty(annotations)) {
             for (PsiAnnotation annotation : annotations) {
@@ -53,7 +53,7 @@ public enum PsiHttpUtils {
         PsiParameter[] parameters = element.getParameterList().getParameters();
         if (ArrayUtils.isNotEmpty(parameters)) {
             for (PsiParameter parameter : parameters) {
-                PsiAnnotation[] parameterAnnotations = parameter.getAnnotations();
+                PsiAnnotation[] parameterAnnotations = parameter.getModifierList().getAnnotations();
                 if (ArrayUtils.isEmpty(parameterAnnotations)) {
                     continue;
                 }
@@ -80,7 +80,7 @@ public enum PsiHttpUtils {
             return null;
         }
         StringBuilder sb = new StringBuilder();
-        sb.append(getPath(psiClass.getAnnotations())).append(getPath(element.getAnnotations()));
+        sb.append(getPath(psiClass.getModifierList().getAnnotations())).append(getPath(element.getModifierList().getAnnotations()));
         return normalize(sb.toString());
     }
 
@@ -100,7 +100,7 @@ public enum PsiHttpUtils {
     }
 
     public boolean isController(PsiClass psiClass) {
-        PsiAnnotation[] annotations = psiClass.getAnnotations();
+        PsiAnnotation[] annotations = psiClass.getModifierList().getAnnotations();
         if (ArrayUtils.isEmpty(annotations)) {
             return false;
         }
@@ -113,7 +113,7 @@ public enum PsiHttpUtils {
     }
 
     public boolean isRequestMethod(PsiMethod psiMethod) {
-        PsiAnnotation[] annotations = psiMethod.getAnnotations();
+        PsiAnnotation[] annotations = psiMethod.getModifierList().getAnnotations();
         if (ArrayUtils.isEmpty(annotations)) {
             return false;
         }
