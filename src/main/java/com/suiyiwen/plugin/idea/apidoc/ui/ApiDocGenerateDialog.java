@@ -38,6 +38,7 @@ public class ApiDocGenerateDialog extends DialogWrapper {
         this.model = initModel;
         this.psiElement = psiElement;
         init();
+        setModal(false);
         setTitle(ApiDocConstant.TITLE_GENERATE_DIALOG);
         setSize(800, 800);
     }
