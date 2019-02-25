@@ -129,9 +129,9 @@ public enum DialogHelper {
             mergeModel.setDescription(oldModel.getDescription());
         }
         if (StringUtils.isNotBlank(oldModel.getVersion())) {
-            newModel.setVersion(oldModel.getVersion());
+            mergeModel.setVersion(oldModel.getVersion());
         }
-        if (StringUtils.isBlank(mergeModel.getRequestTitle())) {
+        if (StringUtils.isNotBlank(oldModel.getRequestTitle())) {
             mergeModel.setRequestTitle(oldModel.getRequestTitle());
         }
         if (StringUtils.isBlank(mergeModel.getRequestUrl())) {

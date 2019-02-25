@@ -80,7 +80,7 @@ public enum PsiHttpUtils {
             return null;
         }
         StringBuilder sb = new StringBuilder();
-        sb.append(getPath(psiClass.getModifierList().getAnnotations())).append(getPath(element.getModifierList().getAnnotations()));
+        sb.append(getPath(psiClass.getModifierList().getAnnotations())).append(ApiDocConstant.CHAR_SEPERATOR).append(getPath(element.getModifierList().getAnnotations()));
         return normalize(sb.toString());
     }
 

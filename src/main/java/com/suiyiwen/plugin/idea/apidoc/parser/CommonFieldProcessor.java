@@ -23,6 +23,9 @@ public class CommonFieldProcessor extends AbstractTagProcessor {
         if (CollectionUtils.isNotEmpty(textList)) {
             boolean descFlag = false;
             for (String text : textList) {
+                if (StringUtils.isBlank(text)) {
+                    continue;
+                }
                 if (StringUtils.startsWith(text, ApiDocConstant.TAG_TEXT_OPEN_PAREN) && StringUtils.endsWith(text, ApiDocConstant.TAG_TEXT_CLOSE_PAREN)) {
                     element.setGroup(StringUtils.strip(text, String.format("%s%s", ApiDocConstant.TAG_TEXT_OPEN_PAREN, ApiDocConstant.TAG_TEXT_CLOSE_PAREN)));
                 } else if (StringUtils.startsWith(text, ApiDocConstant.TAG_TEXT_OPEN_BRACE) && StringUtils.endsWith(text, ApiDocConstant.TAG_TEXT_CLOSE_BRACE)) {

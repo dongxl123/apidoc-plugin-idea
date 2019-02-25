@@ -21,6 +21,10 @@ Default **Option + Ctrl + Shift + p**(Mac), **Alt + Ctrl + Shift + p** (win)
 
 ## Version Info
 
+v1.4
+> 
+* Optimizing UI Interface
+
 v1.3
 > 
 * Support IDEA earlier version since 162+
