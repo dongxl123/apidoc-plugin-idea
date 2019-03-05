@@ -5,6 +5,7 @@ import com.intellij.openapi.actionSystem.CommonDataKeys;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.*;
 import com.intellij.psi.impl.source.PsiClassReferenceType;
+import com.suiyiwen.plugin.idea.apidoc.constant.ApiDocConstant;
 import com.suiyiwen.plugin.idea.apidoc.enums.FieldType;
 import com.suiyiwen.plugin.idea.apidoc.enums.JavaDocElements;
 import org.apache.commons.collections.MapUtils;
@@ -106,10 +107,10 @@ public enum PsiTypesUtils {
                     if (next != null) {
                         sb.append(next.getText().trim());
                     }
-                    sb.append(JavaDocElements.NEW_LINE.getPresentation());
+                    sb.append(ApiDocConstant.CHAR_COMMA);
                 }
             }
-            return sb.toString();
+            return StringUtils.stripEnd(sb.toString(), ApiDocConstant.CHAR_COMMA);
         }
         return null;
     }
