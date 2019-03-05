@@ -4,6 +4,7 @@ import com.intellij.openapi.components.PersistentStateComponent;
 import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.components.State;
 import com.intellij.openapi.components.Storage;
+import com.suiyiwen.plugin.idea.apidoc.constant.ApiDocConstant;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -17,14 +18,14 @@ import org.jetbrains.annotations.Nullable;
 )
 public class ApiDocSettings implements PersistentStateComponent<ApiDocSettings> {
 
-    private String author;
+    private int depth = ApiDocConstant.OBJECT_EXTRACT_MAX_DEPTH;
 
-    public String getAuthor() {
-        return author;
+    public int getDepth() {
+        return depth;
     }
 
-    public void setAuthor(String author) {
-        this.author = author;
+    public void setDepth(int depth) {
+        this.depth = depth;
     }
 
     public static ApiDocSettings getInstance() {
@@ -39,6 +40,6 @@ public class ApiDocSettings implements PersistentStateComponent<ApiDocSettings> 
 
     @Override
     public void loadState(@NotNull ApiDocSettings state) {
-        this.author = state.getAuthor();
+        this.depth = state.getDepth();
     }
 }

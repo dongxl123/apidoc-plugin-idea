@@ -14,6 +14,10 @@
     ]]></description>
 
     <change-notes><![CDATA[
+    <h2>v1.5</h2>
+    <ul>
+      <li>Add ApiDoc Plugin Settings: support set parameter  <code>extract object properties max depth</code></li>
+    </ul>
     <h2>v1.4</h2>
     <ul>
       <li>Optimizing UI Interface</li>
@@ -56,6 +60,7 @@
     -->
     <extensions defaultExtensionNs="com.intellij">
         <applicationService serviceImplementation="com.suiyiwen.plugin.idea.apidoc.component.ApiDocSettings"/>
+        <projectConfigurable instance="com.suiyiwen.plugin.idea.apidoc.ui.ApiDocSettingsPage"/>
     </extensions>
 
     <application-components>

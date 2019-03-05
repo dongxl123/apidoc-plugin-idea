@@ -6,6 +6,7 @@ import com.intellij.psi.util.PsiTypesUtil;
 import com.suiyiwen.plugin.idea.apidoc.bean.dialog.FieldBean;
 import com.suiyiwen.plugin.idea.apidoc.bean.dialog.ParamBean;
 import com.suiyiwen.plugin.idea.apidoc.bean.dialog.ResultBean;
+import com.suiyiwen.plugin.idea.apidoc.component.ApiDocSettings;
 import com.suiyiwen.plugin.idea.apidoc.constant.ApiDocConstant;
 import com.suiyiwen.plugin.idea.apidoc.enums.AnnotationClass;
 import com.suiyiwen.plugin.idea.apidoc.enums.HttpRequestMethod;
@@ -23,6 +24,8 @@ import java.util.List;
 public enum NewDialogModelParseUtils {
 
     INSTANCE;
+
+    private ApiDocSettings apiDocSettings = ApiDocSettings.getInstance();
 
     public String parseRequestMethod(PsiMethod element) {
         HttpRequestMethod requestMethod = PsiHttpUtils.INSTANCE.getHttpRequestMethod(element);
@@ -171,11 +174,11 @@ public enum NewDialogModelParseUtils {
     }
 
     private List<FieldBean> parseRefFieldBeanList(PsiType psiType) {
-        return parseRefFieldBeanList(psiType, ApiDocConstant.OBJECT_RESOLVE_DEPTH_START);
+        return parseRefFieldBeanList(psiType, ApiDocConstant.OBJECT_EXTRACT_DEPTH_START);
     }
 
     private List<FieldBean> parseRefFieldBeanList(PsiType psiType, int depth) {
-        boolean isFirstDepth = ApiDocConstant.OBJECT_RESOLVE_DEPTH_START == depth;
+        boolean isFirstDepth = ApiDocConstant.OBJECT_EXTRACT_DEPTH_START == depth;
         if (isFirstDepth) {
             depth++;
         }
@@ -217,7 +220,7 @@ public enum NewDialogModelParseUtils {
         if (StringUtils.isBlank(fieldBean.getDescription()) && PsiTypesUtils.INSTANCE.isEnum(psiType)) {
             fieldBean.setDescription(PsiTypesUtils.INSTANCE.generateEnumDescription(psiType));
         }
-        if (depth >= ApiDocConstant.OBJECT_RESOLVE_MAX_DEPTH) {
+        if (depth >= apiDocSettings.getDepth()) {
             return fieldBean;
         }
         List<FieldBean> childFieldList = parseRefFieldBeanList(psiType, depth + 1);

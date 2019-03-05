@@ -9,6 +9,7 @@ public interface ApiDocConstant {
     String DEFAULT_VERSION = "1.0.0";
     String TITLE_GENERATE_DIALOG = "ApiDoc";
     String NOTIFICATION_GROUP_DISPLAY_ID = "ApiDoc";
+    String PLUGIN_NAME = "ApiDoc plugin ";
     String NOTIFICATION_TITLE = "ApiDoc Notification";
     String NOTIFICATION_FOCUS_CONTENT = "please focus over java method";
     String NOTIFICATION_NOT_CONTROLLER_CONTENT = "this is not a controller";
@@ -25,8 +26,8 @@ public interface ApiDocConstant {
     String CHAR_AND = "&";
     String CHAR_EQUAL = "=";
     String TAG_TEXT_DEFAULT_TITLE_RESULT_GROUP = "responseBody";
-    int OBJECT_RESOLVE_MAX_DEPTH = 4;
-    int OBJECT_RESOLVE_DEPTH_START = 1;
+    int OBJECT_EXTRACT_MAX_DEPTH = 3;
+    int OBJECT_EXTRACT_DEPTH_START = 0;
     String TAG_REQUEST_PARAM_GROUP_TITLE = "请求参数";
     String TAG_REQUEST_BODY_GROUP_TITLE = "请求体";
     String TAG_RESPONSE_BODY_GROUP_TITLE = "响应结果";
