@@ -20,6 +20,10 @@ ApiDoc
 Default **Option + Ctrl + Shift + p**(Mac), **Alt + Ctrl + Shift + p** (win)
 
 ## Version Info
+v1.6
+> 
+* Resolve conflict: JavaDocWriter component name collision
+
 v1.5
 > 
 * Add ApiDoc Plugin Settings: support set parameter `extract object properties max depth`
