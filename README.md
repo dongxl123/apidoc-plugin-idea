@@ -20,9 +20,13 @@ ApiDoc
 Default **Option + Ctrl + Shift + p**(Mac), **Alt + Ctrl + Shift + p** (win)
 
 ## Version Info
-v1.6
+v1.7
 > 
 * Optimizing UI Interface : add regenerate example radiobutton
+
+v1.6
+> 
+* Resolve conflict: JavaDocWriter component name collision
 
 v1.5
 > 
