@@ -25,5 +25,5 @@ public class DialogModel implements Serializable {
     private ParamBean requestParameter;
     private ParamBean requestBody;
     private ResultBean responseBody;
-
+    private Boolean reGenerateExampleFlag;
 }

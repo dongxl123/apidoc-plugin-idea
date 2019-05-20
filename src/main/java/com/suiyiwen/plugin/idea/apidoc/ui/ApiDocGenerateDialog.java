@@ -2,12 +2,14 @@ package com.suiyiwen.plugin.idea.apidoc.ui;
 
 import com.intellij.openapi.ui.DialogWrapper;
 import com.intellij.psi.PsiElement;
+import com.intellij.ui.components.JBRadioButton;
 import com.intellij.ui.components.JBScrollPane;
 import com.suiyiwen.plugin.idea.apidoc.bean.dialog.DialogModel;
 import com.suiyiwen.plugin.idea.apidoc.constant.ApiDocConstant;
 import com.suiyiwen.plugin.idea.apidoc.helper.DialogHelper;
 import com.suiyiwen.plugin.idea.apidoc.utils.FieldBeanTreeUtils;
 import com.suiyiwen.plugin.idea.apidoc.utils.TreeTableUtils;
+import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.jdesktop.swingx.JXTreeTable;
 import org.jetbrains.annotations.NotNull;
@@ -30,6 +32,8 @@ public class ApiDocGenerateDialog extends DialogWrapper {
     private JBScrollPane requestBodyPanel;
     private JBScrollPane responseBodyPanel;
     private JComboBox requestMethodComboBox;
+    private JBRadioButton yesRadioButton;
+    private JBRadioButton noRadioButton;
     private DialogModel model;
     private PsiElement psiElement;
 
@@ -100,6 +104,11 @@ public class ApiDocGenerateDialog extends DialogWrapper {
         }
         if (requestMethodComboBox.getSelectedItem() != null) {
             model.setRequestMethod(requestMethodComboBox.getSelectedItem().toString());
+        }
+        if (BooleanUtils.isTrue(yesRadioButton.isSelected())) {
+            model.setReGenerateExampleFlag(true);
+        } else {
+            model.setReGenerateExampleFlag(false);
         }
         return model;
     }

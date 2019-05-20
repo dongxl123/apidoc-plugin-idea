@@ -1,7 +1,7 @@
 <idea-plugin>
     <id>com.suiyiwen.plugin.idea.apidoc</id>
     <name>apiDoc</name>
-    <version>1.3</version>
+    <version>1.6</version>
     <vendor email="dongxl123@163.com" url="http://blog.suiyiwen.com/">suiyiwen</vendor>
 
     <description><![CDATA[
@@ -14,6 +14,10 @@
     ]]></description>
 
     <change-notes><![CDATA[
+    <h2>v1.6</h2>
+    <ul>
+      <li>Optimizing UI Interface : add regenerate example radiobutton</code></li>
+    </ul>
     <h2>v1.5</h2>
     <ul>
       <li>Add ApiDoc Plugin Settings: support set parameter  <code>extract object properties max depth</code></li>

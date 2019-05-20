@@ -11,6 +11,7 @@ import com.suiyiwen.plugin.idea.apidoc.constant.ApiDocConstant;
 import com.suiyiwen.plugin.idea.apidoc.ui.ApiDocGenerateDialog;
 import com.suiyiwen.plugin.idea.apidoc.utils.*;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.Iterator;
@@ -52,21 +53,21 @@ public enum DialogHelper {
         ParamBean requestParameter = model.getRequestParameter();
         if (requestParameter != null) {
             filterDialogModelFieldBeanRecursively(requestParameter.getFieldList());
-            if (StringUtils.isBlank(requestParameter.getExample())) {
+            if (StringUtils.isBlank(requestParameter.getExample()) || BooleanUtils.isTrue(model.getReGenerateExampleFlag())) {
                 requestParameter.setExample(ExampleUtils.INSTANCE.generateRequestParameterExampleString(requestParameter.getFieldList()));
             }
         }
         ParamBean requestBody = model.getRequestBody();
         if (requestBody != null) {
             filterDialogModelFieldBeanRecursively(requestBody.getFieldList());
-            if (StringUtils.isBlank(requestBody.getExample())) {
+            if (StringUtils.isBlank(requestBody.getExample()) || BooleanUtils.isTrue(model.getReGenerateExampleFlag())) {
                 requestBody.setExample(ExampleUtils.INSTANCE.generateRequestBodyExampleString(requestBody.getFieldList()));
             }
         }
         ResultBean responseBody = model.getResponseBody();
         if (responseBody != null) {
             filterDialogModelFieldBeanRecursively(responseBody.getFieldList());
-            if (StringUtils.isBlank(responseBody.getExample())) {
+            if (StringUtils.isBlank(responseBody.getExample()) || BooleanUtils.isTrue(model.getReGenerateExampleFlag())) {
                 responseBody.setExample(ExampleUtils.INSTANCE.generateResponseBodyExampleString(responseBody.getFieldList()));
             }
         }
