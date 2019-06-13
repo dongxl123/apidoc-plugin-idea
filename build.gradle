@@ -1,3 +1,4 @@
+
 plugins {
     id "org.jetbrains.intellij" version "0.1.10"
 }
@@ -9,8 +10,8 @@ sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
 
 intellij {
-    version 'IC-2016.2.5'
-//    version 'IC-2018.2.1'
+    plugins 'java'
+    version 'IC-192.4787.16'
     pluginName 'apiDoc'
     updateSinceUntilBuild false
 }
@@ -20,14 +21,12 @@ tasks.withType(JavaCompile) {
 }
 
 group 'com.suiyiwen.plugin.idea'
-version '1.8-1'
+version '1.9'
 
 repositories {
     mavenLocal()
     maven { url "http://192.168.180.191:8081/nexus/content/repositories/public" }
     maven { url "http://192.168.180.191:8081/nexus/content/repositories/snapshots" }
-    maven { url "http://www.ibiblio.org/maven2" }
-    maven { url "http://mirrors.ibiblio.org/pub/mirrors/maven2" }
     maven { url "http://maven.aliyun.com/nexus/content/groups/public" }
     maven { url "http://maven.mirrorid/content/groups/public" }
     maven { url "http://repository.jboss.org/maven2" }
