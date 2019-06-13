@@ -1,7 +1,7 @@
 <idea-plugin>
     <id>com.suiyiwen.plugin.idea.apidoc</id>
     <name>apiDoc</name>
-    <version>1.7</version>
+    <version>1.8</version>
     <vendor email="dongxl123@163.com" url="http://blog.suiyiwen.com/">suiyiwen</vendor>
 
     <description><![CDATA[
@@ -14,9 +14,13 @@
     ]]></description>
 
     <change-notes><![CDATA[
-     <h2>v1.7</h2>
+    <h2>v1.8</h2>
     <ul>
-      <li>Optimizing UI Interface : add regenerate example radiobutton</code></li>
+      <li>fix bug:  request url not support annotation attribute <code>path</code></li>
+    </ul>
+    <h2>v1.7</h2>
+    <ul>
+      <li>Optimizing UI Interface : add regenerate example radiobutton</li>
     </ul>
     <h2>v1.6</h2>
     <ul>

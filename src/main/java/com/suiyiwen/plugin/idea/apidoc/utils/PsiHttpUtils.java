@@ -88,8 +88,10 @@ public enum PsiHttpUtils {
         for (PsiAnnotation annotation : annotations) {
             if (PsiAnnotationUtils.INSTANCE.isAssignableFrom(AnnotationClass.REQUEST_MAPPING.getClassName(), annotation)) {
                 String valueText = PsiAnnotationUtils.INSTANCE.getAttributeText(annotation, "value");
+                valueText = StringUtils.strip(valueText, ApiDocConstant.TAG_TEXT_OPEN_BRACE + ApiDocConstant.TAG_TEXT_CLOSE_BRACE);
                 if (StringUtils.isBlank(valueText)) {
                     valueText = PsiAnnotationUtils.INSTANCE.getAttributeText(annotation, "path");
+                    valueText = StringUtils.strip(valueText, ApiDocConstant.TAG_TEXT_OPEN_BRACE + ApiDocConstant.TAG_TEXT_CLOSE_BRACE);
                 }
                 if (StringUtils.isNotBlank(valueText)) {
                     return valueText;

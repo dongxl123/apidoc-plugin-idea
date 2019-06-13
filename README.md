@@ -20,6 +20,10 @@ ApiDoc
 Default **Option + Ctrl + Shift + p**(Mac), **Alt + Ctrl + Shift + p** (win)
 
 ## Version Info
+v1.8
+> 
+* fix bug:  request url not support annotation attribute `path`
+
 v1.7
 > 
 * Optimizing UI Interface : add regenerate example radiobutton
