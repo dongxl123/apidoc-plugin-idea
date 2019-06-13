@@ -1,7 +1,7 @@
 <idea-plugin>
     <id>com.suiyiwen.plugin.idea.apidoc</id>
     <name>apiDoc</name>
-    <version>1.8</version>
+    <version>1.8-1</version>
     <vendor email="dongxl123@163.com" url="http://blog.suiyiwen.com/">suiyiwen</vendor>
 
     <description><![CDATA[
@@ -63,7 +63,7 @@
     </change-notes>
 
     <!-- please see https://confluence.jetbrains.com/display/IDEADEV/Build+Number+Ranges for text -->
-    <idea-version since-build="162"/>
+    <idea-version since-build="162" until-build="191.*"/>
 
     <!-- please see https://confluence.jetbrains.com/display/IDEADEV/Plugin+Compatibility+with+IntelliJ+Platform+Products
          on how to target different products -->
