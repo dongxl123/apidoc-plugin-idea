@@ -1,7 +1,6 @@
 <idea-plugin>
     <id>com.suiyiwen.plugin.idea.apidoc</id>
     <name>apiDoc</name>
-    <version>1.8-1</version>
     <vendor email="dongxl123@163.com" url="http://blog.suiyiwen.com/">suiyiwen</vendor>
 
     <description><![CDATA[
