@@ -19,6 +19,14 @@ ApiDoc
 ### Use hotkey
 Default **Option + Ctrl + Shift + p**(Mac), **Alt + Ctrl + Shift + p** (win)
 
+### Examples
+* operation steps
+![avatar](./usage.gif)
+
+* use npm command `apidoc`, to generate html
+![avatar](./html.png)
+
+
 ## Version Info
 v1.8
 > 
