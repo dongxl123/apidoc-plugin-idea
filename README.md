@@ -31,6 +31,8 @@ Default **Option + Ctrl + Shift + p**(Mac), **Alt + Ctrl + Shift + p** (win)
 v1.8
 > 
 * fix bug:  request url not support annotation attribute `path`
+* fix bug:  generic parameter parse error in some cases
+* create branch 191 to support idea (162.* - 191.*)
 
 v1.7
 > 

@@ -16,6 +16,8 @@
     <h2>v1.8</h2>
     <ul>
       <li>fix bug:  request url not support annotation attribute <code>path</code></li>
+      <li>fix bug:  generic parameter parse error in some cases</li>
+      <li>create branch 191 to support idea (162.* - 191.*)</li>
     </ul>
     <h2>v1.7</h2>
     <ul>
