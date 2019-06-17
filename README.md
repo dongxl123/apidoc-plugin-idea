@@ -28,7 +28,11 @@ Default **Option + Ctrl + Shift + p**(Mac), **Alt + Ctrl + Shift + p** (win)
 
 
 ## Version Info
-v1.8
+v1.8-2
+> 
+* fix bug:  generic parameter parse error in some cases
+
+v1.8-1
 > 
 * fix bug:  request url not support annotation attribute `path`
 

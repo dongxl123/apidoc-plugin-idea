@@ -13,7 +13,11 @@
     ]]></description>
 
     <change-notes><![CDATA[
-    <h2>v1.8</h2>
+    <h2>v1.8-2</h2>
+    <ul>
+      <li> fix bug:  generic parameter parse error in some cases</li>
+    </ul>
+    <h2>v1.8-1</h2>
     <ul>
       <li>fix bug:  request url not support annotation attribute <code>path</code></li>
     </ul>
