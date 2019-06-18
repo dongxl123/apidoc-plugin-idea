@@ -13,6 +13,10 @@
     ]]></description>
 
     <change-notes><![CDATA[
+    <h2>v1.8-3</h2>
+    <ul>
+      <li> fix bug:  request parameter parse error with some annotations, like <code>@Validated</code>, <code>@ModelAttribute</code></li>
+    </ul>
     <h2>v1.8-2</h2>
     <ul>
       <li> fix bug:  generic parameter parse error in some cases</li>
