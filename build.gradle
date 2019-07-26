@@ -26,12 +26,9 @@ repositories {
     mavenLocal()
     maven { url "http://192.168.180.191:8081/nexus/content/repositories/public" }
     maven { url "http://192.168.180.191:8081/nexus/content/repositories/snapshots" }
-    maven { url "http://www.ibiblio.org/maven2" }
-    maven { url "http://mirrors.ibiblio.org/pub/mirrors/maven2" }
-    maven { url "http://maven.aliyun.com/nexus/content/groups/public" }
-    maven { url "http://maven.mirrorid/content/groups/public" }
-    maven { url "http://repository.jboss.org/maven2" }
-    maven { url "http://www.mvnsearch.org/maven2" }
+    maven { url "http://maven.aliyun.com/repository/public" }
+    maven { url "http://maven.aliyun.com/repository/spring" }
+    maven { url "http://maven.aliyun.com/repository/google" }
     mavenCentral()
 }
 
