@@ -28,6 +28,10 @@ Default **Option + Ctrl + Shift + p**(Mac), **Alt + Ctrl + Shift + p** (win)
 
 
 ## Version Info
+v2.0
+> 
+* Support IDEA earlier version since 192+
+
 v1.8
 > 
 * fix bug:  request url not support annotation attribute `path`

@@ -13,6 +13,10 @@
     ]]></description>
 
     <change-notes><![CDATA[
+    <h2> v2.0</h2>
+    <ul>
+      <li>Support IDEA earlier version since 192+</li>
+    </ul>
     <h2>v1.8</h2>
     <ul>
       <li>fix bug:  request url not support annotation attribute <code>path</code></li>
