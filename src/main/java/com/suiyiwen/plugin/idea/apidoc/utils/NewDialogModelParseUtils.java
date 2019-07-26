@@ -94,7 +94,10 @@ public enum NewDialogModelParseUtils {
             }
             return true;
         }
-        return false;
+        if (PsiAnnotationUtils.INSTANCE.hasAnnotation(psiParameter.getModifierList(), AnnotationClass.REQUEST_BODY.getClassName())) {
+            return false;
+        }
+        return true;
     }
 
     public ParamBean parseRequestBody(PsiMethod element) {
