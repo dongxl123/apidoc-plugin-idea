@@ -69,6 +69,7 @@
 
     <!-- please see https://confluence.jetbrains.com/display/IDEADEV/Build+Number+Ranges for text -->
     <idea-version since-build="192"/>
+    <depends>com.intellij.modules.java</depends>
 
     <!-- please see https://confluence.jetbrains.com/display/IDEADEV/Plugin+Compatibility+with+IntelliJ+Platform+Products
          on how to target different products -->

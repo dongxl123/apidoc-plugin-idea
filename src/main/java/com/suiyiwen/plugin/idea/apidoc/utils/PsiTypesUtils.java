@@ -2,12 +2,12 @@ package com.suiyiwen.plugin.idea.apidoc.utils;
 
 import com.intellij.ide.DataManager;
 import com.intellij.openapi.actionSystem.CommonDataKeys;
+import com.intellij.openapi.actionSystem.DataContext;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.*;
 import com.intellij.psi.impl.source.PsiClassReferenceType;
 import com.suiyiwen.plugin.idea.apidoc.constant.ApiDocConstant;
 import com.suiyiwen.plugin.idea.apidoc.enums.FieldType;
-import com.suiyiwen.plugin.idea.apidoc.enums.JavaDocElements;
 import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang3.StringUtils;
 
@@ -65,7 +65,13 @@ public enum PsiTypesUtils {
     }
 
     public PsiType createPsiType(String fQClassName) {
-        Project project = CommonDataKeys.PROJECT.getData(DataManager.getInstance().getDataContext());
+        DataContext dataContext = null;
+        try {
+            dataContext = DataManager.getInstance().getDataContextFromFocusAsync().blockingGet(ApiDocConstant.DATA_CONTEXT_BLOCKING_TIMEOUT);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        Project project = CommonDataKeys.PROJECT.getData(dataContext);
         return JavaPsiFacade.getElementFactory(project).createTypeByFQClassName(fQClassName);
     }
 

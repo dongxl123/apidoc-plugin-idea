@@ -1,6 +1,6 @@
 package com.suiyiwen.plugin.idea.apidoc.component.operation;
 
-import com.intellij.openapi.components.ApplicationComponent;
+import com.intellij.openapi.components.BaseComponent;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.javadoc.PsiDocComment;
 import org.jetbrains.annotations.NotNull;
@@ -10,7 +10,7 @@ import org.jetbrains.annotations.NotNull;
  *
  * @author Sergey Timofiychuk
  */
-public interface JavaDocWriter extends ApplicationComponent {
+public interface JavaDocWriter extends BaseComponent {
 
     /**
      * The constant WRITE_JAVADOC_COMMAND_NAME.
@@ -19,7 +19,7 @@ public interface JavaDocWriter extends ApplicationComponent {
     /**
      * The constant WRITE_JAVADOC_COMMAND_GROUP.
      */
-    String WRITE_JAVADOC_COMMAND_GROUP = "com.github.setial.operation";
+    String WRITE_JAVADOC_COMMAND_GROUP = "com.suiyiwen.plugin.idea.apidoc.component.operation";
 
     /**
      * Write java doc.
