@@ -2,10 +2,10 @@ package com.suiyiwen.plugin.idea.apidoc.utils;
 
 import com.intellij.psi.javadoc.PsiDocComment;
 import com.intellij.psi.javadoc.PsiDocTag;
-import com.suiyiwen.plugin.idea.apidoc.enums.ApiDocTag;
-import com.suiyiwen.plugin.idea.apidoc.enums.JavaDocElements;
 import com.suiyiwen.plugin.idea.apidoc.bean.apidoc.*;
 import com.suiyiwen.plugin.idea.apidoc.constant.ApiDocConstant;
+import com.suiyiwen.plugin.idea.apidoc.enums.ApiDocTag;
+import com.suiyiwen.plugin.idea.apidoc.enums.JavaDocElements;
 import com.suiyiwen.plugin.idea.apidoc.parser.*;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.MapUtils;
@@ -143,11 +143,11 @@ public enum ApiDocElementUtils {
                 groupName = tElement.getTitle();
             }
             if (StringUtils.isNotBlank(groupName)) {
-                if (groupName.startsWith(ApiDocConstant.TAG_REQUEST_PARAM_GROUP_TITLE)) {
+                if (StringUtils.startsWith(groupName, ApiDocConstant.TAG_REQUEST_PARAM_GROUP_TITLE)) {
                     groupName = ApiDocConstant.TAG_REQUEST_PARAM_GROUP_TITLE;
-                } else if (groupName.startsWith(ApiDocConstant.TAG_REQUEST_BODY_GROUP_TITLE)) {
+                } else if (StringUtils.startsWith(groupName, ApiDocConstant.TAG_REQUEST_BODY_GROUP_TITLE)) {
                     groupName = ApiDocConstant.TAG_REQUEST_BODY_GROUP_TITLE;
-                } else if (groupName.startsWith(ApiDocConstant.TAG_RESPONSE_BODY_GROUP_TITLE)) {
+                } else if (StringUtils.startsWith(groupName, ApiDocConstant.TAG_RESPONSE_BODY_GROUP_TITLE)) {
                     groupName = ApiDocConstant.TAG_RESPONSE_BODY_GROUP_TITLE;
                 }
                 if (!map.containsKey(groupName)) {

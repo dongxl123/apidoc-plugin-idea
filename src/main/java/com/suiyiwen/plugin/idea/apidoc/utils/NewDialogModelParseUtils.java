@@ -30,7 +30,7 @@ public enum NewDialogModelParseUtils {
     public String parseRequestMethod(PsiMethod element) {
         HttpRequestMethod requestMethod = PsiHttpUtils.INSTANCE.getHttpRequestMethod(element);
         if (requestMethod == null) {
-            HttpRequestMethod.POST.name();
+            requestMethod = HttpRequestMethod.POST;
         }
         return requestMethod.name();
     }
