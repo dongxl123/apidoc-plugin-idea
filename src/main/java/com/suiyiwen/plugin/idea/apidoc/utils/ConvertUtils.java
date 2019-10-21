@@ -76,7 +76,7 @@ public enum ConvertUtils {
             return null;
         }
         ApiDocCommentBean commentBean = new ApiDocCommentBean();
-        if (StringUtils.isNotBlank(dialogModel.getRequestUrl()) && StringUtils.isNotBlank(dialogModel.getRequestUrl())) {
+        if (StringUtils.isNotBlank(dialogModel.getRequestUrl())) {
             Api api = new Api();
             api.setType(dialogModel.getRequestMethod());
             api.setField(dialogModel.getRequestUrl());
