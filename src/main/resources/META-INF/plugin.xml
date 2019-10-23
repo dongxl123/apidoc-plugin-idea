@@ -13,7 +13,12 @@
     ]]></description>
 
     <change-notes><![CDATA[
-    <h2> v2.0</h2>
+    <h2>v2.1</h2>
+    <ul>
+      <li>add pluginIcon.svg</li>
+      <li>fix bug: example data generate error when in some cases</li>
+    </ul>
+    <h2>v2.0</h2>
     <ul>
       <li>Support IDEA earlier version since 192+</li>
     </ul>

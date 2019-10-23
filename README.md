@@ -28,6 +28,11 @@ Default **Option + Ctrl + Shift + p**(Mac), **Alt + Ctrl + Shift + p** (win)
 
 
 ## Version Info
+v2.1
+> 
+* add pluginIcon.svg
+* fix bug: example data generate error when in some cases
+
 v2.0
 > 
 * Support IDEA earlier version since 192+
