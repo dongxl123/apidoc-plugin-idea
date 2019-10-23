@@ -31,6 +31,8 @@ Default **Option + Ctrl + Shift + p**(Mac), **Alt + Ctrl + Shift + p** (win)
 v1.8-4
 > 
 * fix bug:  parameter parse error with annotation `@RequestBody` in some cases, like `List<Object>`, `Object[]`
+* fix bug: example data generate error when in some cases
+* add pluginIcon.svg
 
 v1.8-3
 > 
