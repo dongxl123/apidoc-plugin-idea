@@ -13,6 +13,10 @@
     ]]></description>
 
     <change-notes><![CDATA[
+    <h2>v2.2</h2>
+    <ul>
+      <li> fix bug:  fix bug:  parameter parse error with annotation <code>@RequestBody</code> in some cases, like <code>List<Object></code>, <code>Object[]</code></li>
+    </ul>
     <h2>v2.1</h2>
     <ul>
       <li>add pluginIcon.svg</li>
@@ -73,8 +77,7 @@
     </change-notes>
 
     <!-- please see https://confluence.jetbrains.com/display/IDEADEV/Build+Number+Ranges for text -->
-    <idea-version since-build="192"/>
-    <depends>com.intellij.modules.java</depends>
+    <idea-version since-build="162" until-build="191.*"/>
 
     <!-- please see https://confluence.jetbrains.com/display/IDEADEV/Plugin+Compatibility+with+IntelliJ+Platform+Products
          on how to target different products -->
