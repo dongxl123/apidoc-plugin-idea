@@ -28,6 +28,10 @@ Default **Option + Ctrl + Shift + p**(Mac), **Alt + Ctrl + Shift + p** (win)
 
 
 ## Version Info
+v1.8-4
+> 
+* fix bug:  parameter parse error with annotation `@RequestBody` in some cases, like `List<Object>`, `Object[]`
+
 v1.8-3
 > 
 * fix bug:  request parameter parse error with some annotations, like `@Validated`, `@ModelAttribute`

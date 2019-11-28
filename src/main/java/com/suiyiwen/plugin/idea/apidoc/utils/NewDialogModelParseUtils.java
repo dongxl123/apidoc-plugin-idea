@@ -3,6 +3,7 @@ package com.suiyiwen.plugin.idea.apidoc.utils;
 import com.intellij.psi.*;
 import com.intellij.psi.util.PsiFormatUtil;
 import com.intellij.psi.util.PsiTypesUtil;
+import com.suiyiwen.plugin.idea.apidoc.bean.dialog.AbstractExampleBean;
 import com.suiyiwen.plugin.idea.apidoc.bean.dialog.FieldBean;
 import com.suiyiwen.plugin.idea.apidoc.bean.dialog.ParamBean;
 import com.suiyiwen.plugin.idea.apidoc.bean.dialog.ResultBean;
@@ -104,31 +105,31 @@ public enum NewDialogModelParseUtils {
         if (element == null) {
             return null;
         }
-        List<PsiParameter> requestBodyTypeList = new ArrayList<>();
-
+        PsiType requestBodyPsiType = null;
         for (PsiParameter psiParameter : element.getParameterList().getParameters()) {
             if (PsiAnnotationUtils.INSTANCE.hasAnnotation(psiParameter.getModifierList(), AnnotationClass.REQUEST_BODY.getClassName())) {
-                requestBodyTypeList.add(psiParameter);
+                requestBodyPsiType = psiParameter.getType();
+                break;
             }
         }
-        return parseParamBean(ApiDocConstant.TAG_REQUEST_BODY_GROUP_TITLE, requestBodyTypeList);
+        return parseBodyExampleBean(ApiDocConstant.TAG_REQUEST_BODY_GROUP_TITLE, requestBodyPsiType, ParamBean.class);
     }
 
     public ResultBean parseResponseBody(PsiMethod element) {
         if (element == null) {
             return null;
         }
-        ResultBean resultBean = parseResultBean(ApiDocConstant.TAG_RESPONSE_BODY_GROUP_TITLE, element.getReturnType());
-        return resultBean;
+        return parseBodyExampleBean(ApiDocConstant.TAG_RESPONSE_BODY_GROUP_TITLE, element.getReturnType(), ResultBean.class);
     }
 
-    private ResultBean parseResultBean(String title, PsiType psiType) {
-        ResultBean exampleBean = new ResultBean();
+    private <T extends AbstractExampleBean> T parseBodyExampleBean(String title, PsiType psiType, Class<T> cls) {
+        T exampleBean = ClassUtils.INSTANCE.newInstance(cls);
         if (psiType == null) {
             return null;
         }
         FieldBean rootFieldBean = new FieldBean();
-        rootFieldBean.setName(ApiDocConstant.STRING_RESPONSE);
+        String defaultRootName = exampleBean instanceof ResultBean ? ApiDocConstant.STRING_RESPONSE : ApiDocConstant.STRING_REQUEST_BODY;
+        rootFieldBean.setName(defaultRootName);
         rootFieldBean.setType(PsiTypesUtils.INSTANCE.getFieldType(psiType).name());
         rootFieldBean.setPsiType(psiType);
         if (PsiTypesUtils.INSTANCE.isEnum(psiType)) {

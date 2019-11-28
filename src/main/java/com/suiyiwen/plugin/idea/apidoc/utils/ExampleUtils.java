@@ -67,6 +67,9 @@ public enum ExampleUtils {
             return null;
         }
         JSONObject o = generateExampleRecursively(fieldBeanList);
+        if (o.size() == 1 && o.containsKey(ApiDocConstant.STRING_REQUEST_BODY)) {
+            return JSONObject.toJSONString(o.get(ApiDocConstant.STRING_REQUEST_BODY));
+        }
         return JSONObject.toJSONString(o);
     }
 
