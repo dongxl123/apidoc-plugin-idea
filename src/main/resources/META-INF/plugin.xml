@@ -15,7 +15,7 @@
     <change-notes><![CDATA[
     <h2>v1.8-4</h2>
     <ul>
-      <li> fix bug:  fix bug:  parameter parse error with annotation <code>@RequestBody</code> in some cases, like <code>List<Object></code>, <code>Object[]</code></li>
+      <li>fix bug: parameter parse error with annotation <code>@RequestBody</code> in some cases, like <code>List&lt;Object&gt;</code>, <code>Object[]</code></li>
       <li>fix bug: example data generate error when in some cases</li>
       <li>add pluginIcon.svg</li>
     </ul>
