@@ -15,7 +15,7 @@
     <change-notes><![CDATA[
     <h2>v2.2</h2>
     <ul>
-      <li> fix bug:  fix bug:  parameter parse error with annotation <code>@RequestBody</code> in some cases, like <code>List<Object></code>, <code>Object[]</code></li>
+      <li>fix bug: parameter parse error with annotation <code>@RequestBody</code> in some cases, like <code>List<Object></code>, <code>Object[]</code></li>
     </ul>
     <h2>v2.1</h2>
     <ul>
