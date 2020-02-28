@@ -28,6 +28,9 @@ Default **Option + Ctrl + Shift + p**(Mac), **Alt + Ctrl + Shift + p** (win)
 
 
 ## Version Info
+v1.8-4
+* fix bug: request url
+
 v1.8-3
 > 
 * fix bug:  request parameter parse error with some annotations, like `@Validated`, `@ModelAttribute`
