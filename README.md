@@ -29,6 +29,7 @@ Default **Option + Ctrl + Shift + p**(Mac), **Alt + Ctrl + Shift + p** (win)
 
 ## Version Info
 v1.8-5
+>
 * fix bug: request url
 
 v1.8-4
