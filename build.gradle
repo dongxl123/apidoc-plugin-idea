@@ -22,7 +22,7 @@ tasks.withType(JavaCompile) {
 }
 
 group 'com.suiyiwen.plugin.idea'
-version '2.2'
+version '2.3'
 
 repositories {
     mavenLocal()
