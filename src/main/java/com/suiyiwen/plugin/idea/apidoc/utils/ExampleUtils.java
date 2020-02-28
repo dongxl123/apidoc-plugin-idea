@@ -67,6 +67,9 @@ public enum ExampleUtils {
             return null;
         }
         JSONObject o = generateExampleRecursively(fieldBeanList);
+        if (o.size() == 1 && o.containsKey(ApiDocConstant.STRING_REQUEST_BODY)) {
+            return JSONObject.toJSONString(o.get(ApiDocConstant.STRING_REQUEST_BODY));
+        }
         return JSONObject.toJSONString(o);
     }
 
@@ -160,15 +163,16 @@ public enum ExampleUtils {
         if (cls == null) {
             return null;
         }
+        FieldType fieldType = PsiTypesUtils.INSTANCE.getFieldType(psiType);
         try {
             Object v = JMockData.mock(cls);
-            if (v == null && FieldType.Array.name().equals(psiType)) {
+            if (v == null && FieldType.Array.equals(fieldType)) {
                 return ArrayUtils.EMPTY_OBJECT_ARRAY;
             }
             return v;
         } catch (
                 Exception e) {
-            if (FieldType.Array.name().equals(psiType)) {
+            if (FieldType.Array.equals(fieldType)) {
                 return ArrayUtils.EMPTY_OBJECT_ARRAY;
             }
             return null;

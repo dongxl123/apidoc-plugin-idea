@@ -1,6 +1,8 @@
 package com.suiyiwen.plugin.idea.apidoc.utils;
 
 import com.intellij.psi.PsiType;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author dongxuanliang252
@@ -9,14 +11,15 @@ import com.intellij.psi.PsiType;
 public enum ClassUtils {
 
     INSTANCE;
+    private static final Logger log = LoggerFactory.getLogger(ClassUtils.class);
 
     public <T> T newInstance(Class<T> cls) {
         try {
             return cls.newInstance();
         } catch (InstantiationException e) {
-            e.printStackTrace();
+            log.error("InstantiationException", e);
         } catch (IllegalAccessException e) {
-            e.printStackTrace();
+            log.error("IllegalAccessException", e);
         }
         return null;
     }
