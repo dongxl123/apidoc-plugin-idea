@@ -1,6 +1,5 @@
 package com.suiyiwen.plugin.idea.apidoc.component.operation;
 
-import com.intellij.openapi.components.BaseComponent;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.javadoc.PsiDocComment;
 import org.jetbrains.annotations.NotNull;
@@ -10,7 +9,7 @@ import org.jetbrains.annotations.NotNull;
  *
  * @author Sergey Timofiychuk
  */
-public interface JavaDocWriter extends BaseComponent {
+public interface JavaDocWriter {
 
     /**
      * The constant WRITE_JAVADOC_COMMAND_NAME.
@@ -28,12 +27,5 @@ public interface JavaDocWriter extends BaseComponent {
      * @param beforeElement the element to place javadoc before it
      */
     void write(@NotNull PsiDocComment javaDoc, @NotNull PsiElement beforeElement);
-
-    /**
-     * Remove void.
-     *
-     * @param beforeElement the before element
-     */
-    void remove(@NotNull PsiElement beforeElement);
 
 }

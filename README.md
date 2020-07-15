@@ -28,6 +28,12 @@ Default **Option + Ctrl + Shift + p**(Mac), **Alt + Ctrl + Shift + p** (win)
 
 
 ## Version Info
+
+v3.0.0
+>
+* support version since 201
+* Resolve conflict: timeout
+  
 v2.3
 >
 * fix bug: request url

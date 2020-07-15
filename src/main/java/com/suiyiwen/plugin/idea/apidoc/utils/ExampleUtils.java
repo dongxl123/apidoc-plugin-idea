@@ -14,6 +14,7 @@ import com.suiyiwen.plugin.idea.apidoc.enums.FieldType;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -33,11 +34,11 @@ public enum ExampleUtils {
         config.put(Double.class, new DoubleSerializer("#.##"));
     }
 
-    public String generateRequestParameterExampleString(List<FieldBean> fieldBeanList) {
+    public String generateRequestParameterExampleString(List<FieldBean> fieldBeanList, @NotNull PsiElement context) {
         if (CollectionUtils.isEmpty(fieldBeanList)) {
             return null;
         }
-        JSONObject o = generateExampleRecursively(fieldBeanList);
+        JSONObject o = generateExampleRecursively(fieldBeanList, context);
         if (o == null) {
             return null;
         }
@@ -62,22 +63,22 @@ public enum ExampleUtils {
         return StringUtils.join(parameterList, ApiDocConstant.CHAR_AND);
     }
 
-    public String generateRequestBodyExampleString(List<FieldBean> fieldBeanList) {
+    public String generateRequestBodyExampleString(List<FieldBean> fieldBeanList, @NotNull PsiElement context) {
         if (CollectionUtils.isEmpty(fieldBeanList)) {
             return null;
         }
-        JSONObject o = generateExampleRecursively(fieldBeanList);
+        JSONObject o = generateExampleRecursively(fieldBeanList, context);
         if (o.size() == 1 && o.containsKey(ApiDocConstant.STRING_REQUEST_BODY)) {
             return JSONObject.toJSONString(o.get(ApiDocConstant.STRING_REQUEST_BODY));
         }
         return JSONObject.toJSONString(o);
     }
 
-    public String generateResponseBodyExampleString(List<FieldBean> fieldBeanList) {
+    public String generateResponseBodyExampleString(List<FieldBean> fieldBeanList, @NotNull PsiElement context) {
         if (CollectionUtils.isEmpty(fieldBeanList)) {
             return null;
         }
-        JSONObject o = generateExampleRecursively(fieldBeanList);
+        JSONObject o = generateExampleRecursively(fieldBeanList, context);
         if (o == null) {
             return null;
         }
@@ -87,7 +88,7 @@ public enum ExampleUtils {
         return JSONObject.toJSONString(o);
     }
 
-    private JSONObject generateExampleRecursively(List<FieldBean> fieldBeanList) {
+    private JSONObject generateExampleRecursively(List<FieldBean> fieldBeanList, @NotNull PsiElement context) {
         if (CollectionUtils.isEmpty(fieldBeanList)) {
             return null;
         }
@@ -97,7 +98,7 @@ public enum ExampleUtils {
             if (FieldType.Array.name().equals(fieldBean.getType())) {
                 JSONArray jsonArray = new JSONArray();
                 if (CollectionUtils.isEmpty(childFieldBeanList)) {
-                    Object defaultFieldValue = generateDefaultFieldValue(fieldBean);
+                    Object defaultFieldValue = generateDefaultFieldValue(fieldBean, context);
                     if (defaultFieldValue != null) {
                         jsonArray = JSONArray.parseArray(JSON.toJSONString(defaultFieldValue));
                         if (jsonArray != null && jsonArray.size() > 2) {
@@ -105,47 +106,47 @@ public enum ExampleUtils {
                         }
                     }
                 } else {
-                    JSONObject o = generateExampleRecursively(childFieldBeanList);
+                    JSONObject o = generateExampleRecursively(childFieldBeanList, context);
                     if (o != null) {
                         jsonArray.add(o);
                     }
                 }
                 root.put(fieldBean.getName(), jsonArray);
             } else if (CollectionUtils.isEmpty(childFieldBeanList)) {
-                Object defaultFieldValue = generateDefaultFieldValue(fieldBean);
+                Object defaultFieldValue = generateDefaultFieldValue(fieldBean, context);
                 root.put(fieldBean.getName(), defaultFieldValue);
             } else {
-                JSONObject o = generateExampleRecursively(childFieldBeanList);
+                JSONObject o = generateExampleRecursively(childFieldBeanList, context);
                 root.put(fieldBean.getName(), o);
             }
         }
         return root;
     }
 
-    private Object generateDefaultFieldValue(FieldBean fieldBean) {
+    private Object generateDefaultFieldValue(FieldBean fieldBean, @NotNull PsiElement context) {
         if (fieldBean == null || fieldBean.getPsiType() == null || CollectionUtils.isNotEmpty(fieldBean.getChildFieldList())) {
             return null;
         }
         //对于ITERABLE特殊处理
         PsiType psiType = fieldBean.getPsiType();
-        if (PsiTypesUtils.INSTANCE.isIterable(psiType)) {
+        if (PsiTypesUtils.INSTANCE.isIterable(psiType, context)) {
             List<Object> array = new ArrayList<>();
             PsiType[] genericPsiTypes = ((PsiClassType) psiType).getParameters();
             if (ArrayUtils.isNotEmpty(genericPsiTypes)) {
                 PsiType innerPsiType = genericPsiTypes[0];
-                Object o = generateDefaultFieldValue(innerPsiType);
+                Object o = generateDefaultFieldValue(innerPsiType, context);
                 if (o != null) {
                     array.add(o);
                 }
             }
             return array;
         }
-        return generateDefaultFieldValue(psiType);
+        return generateDefaultFieldValue(psiType, context);
     }
 
-    private Object generateDefaultFieldValue(PsiType psiType) {
+    private Object generateDefaultFieldValue(PsiType psiType, @NotNull PsiElement context) {
         //ENUM 特殊处理
-        if (PsiTypesUtils.INSTANCE.isEnum(psiType)) {
+        if (PsiTypesUtils.INSTANCE.isEnum(psiType, context)) {
             List<String> enumStrList = new ArrayList<>();
             PsiClass psiClass = ((PsiClassReferenceType) psiType).resolve();
             for (PsiField psiField : psiClass.getFields()) {
@@ -159,11 +160,11 @@ public enum ExampleUtils {
             }
             return StringUtils.EMPTY;
         }
-        Class cls = ClassUtils.INSTANCE.getClass(psiType);
+        Class cls = ClassUtils.INSTANCE.getClass(psiType, context);
         if (cls == null) {
             return null;
         }
-        FieldType fieldType = PsiTypesUtils.INSTANCE.getFieldType(psiType);
+        FieldType fieldType = PsiTypesUtils.INSTANCE.getFieldType(psiType, context);
         try {
             Object v = JMockData.mock(cls);
             if (v == null && FieldType.Array.equals(fieldType)) {

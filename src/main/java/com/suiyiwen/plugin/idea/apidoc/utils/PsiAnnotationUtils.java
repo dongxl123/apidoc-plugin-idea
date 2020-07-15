@@ -38,7 +38,7 @@ public enum PsiAnnotationUtils {
         } else {
             annotationCaches.add(annotation.getQualifiedName());
         }
-        PsiType fqType = PsiTypesUtils.INSTANCE.createPsiType(annotation.getQualifiedName());
+        PsiType fqType = PsiTypesUtils.INSTANCE.createPsiType(annotation.getQualifiedName(), annotation);
         if (fqType instanceof PsiClassReferenceType) {
             PsiClass psiClass = ((PsiClassReferenceType) fqType).resolve();
             if (psiClass == null) {

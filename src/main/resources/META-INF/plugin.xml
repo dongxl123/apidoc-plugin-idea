@@ -13,6 +13,11 @@
     ]]></description>
 
     <change-notes><![CDATA[
+    <h2>v3.0.0</h2>
+    <ul>
+      <li>support version since 201 </li>
+      <li>Resolve conflict: timeout </li>
+    </ul>
     <h2>v2.3</h2>
     <ul>
       <li>fix bug: request url</li>
@@ -81,7 +86,7 @@
     </change-notes>
 
     <!-- please see https://confluence.jetbrains.com/display/IDEADEV/Build+Number+Ranges for text -->
-    <idea-version since-build="192"/>
+    <idea-version since-build="201"/>
     <depends>com.intellij.modules.java</depends>
 
     <!-- please see https://confluence.jetbrains.com/display/IDEADEV/Plugin+Compatibility+with+IntelliJ+Platform+Products
@@ -92,18 +97,9 @@
     <extensions defaultExtensionNs="com.intellij">
         <applicationService serviceImplementation="com.suiyiwen.plugin.idea.apidoc.component.ApiDocSettings"/>
         <projectConfigurable instance="com.suiyiwen.plugin.idea.apidoc.ui.ApiDocSettingsPage"/>
+        <applicationService serviceInterface="com.suiyiwen.plugin.idea.apidoc.component.operation.JavaDocWriter"
+                            serviceImplementation="com.suiyiwen.plugin.idea.apidoc.component.operation.impl.JavaDocWriterImpl"/>
     </extensions>
-
-    <application-components>
-        <component>
-            <interface-class>com.suiyiwen.plugin.idea.apidoc.component.operation.JavaDocWriter</interface-class>
-            <implementation-class>com.suiyiwen.plugin.idea.apidoc.component.operation.impl.JavaDocWriterImpl
-            </implementation-class>
-        </component>
-    </application-components>
-
-    <project-components>
-    </project-components>
 
     <actions>
         <action id="apiDocPlugin.action.generate" text="apiDoc"

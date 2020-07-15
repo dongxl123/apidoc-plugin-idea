@@ -13,7 +13,7 @@ import com.intellij.psi.PsiWhiteSpace;
 import com.intellij.psi.codeStyle.CodeStyleManager;
 import com.intellij.psi.impl.source.tree.PsiWhiteSpaceImpl;
 import com.intellij.psi.javadoc.PsiDocComment;
-import com.intellij.psi.util.PsiUtilBase;
+import com.intellij.psi.util.PsiEditorUtil;
 import com.suiyiwen.plugin.idea.apidoc.component.operation.JavaDocWriter;
 import com.suiyiwen.plugin.idea.apidoc.exception.FileNotValidException;
 import com.suiyiwen.plugin.idea.apidoc.exception.NotFoundElementException;
@@ -28,27 +28,7 @@ import java.util.Collections;
  */
 public class JavaDocWriterImpl implements JavaDocWriter {
 
-    /**
-     * The constant COMPONENT_NAME.
-     */
-    public static final String COMPONENT_NAME = "ApiDocJavaDocWriter";
-
     private static final Logger LOGGER = Logger.getInstance(JavaDocWriterImpl.class);
-
-    @Override
-    public void initComponent() {
-    }
-
-    @Override
-    public void disposeComponent() {
-    }
-
-    @NotNull
-    @Override
-    public String getComponentName() {
-        return COMPONENT_NAME;
-
-    }
 
     @Override
     public void write(@NotNull PsiDocComment javaDoc, @NotNull PsiElement beforeElement) {
@@ -88,22 +68,6 @@ public class JavaDocWriterImpl implements JavaDocWriter {
         element.getNode().addChild(new PsiWhiteSpaceImpl("\n"), nextElement.getNode());
     }
 
-    @Override
-    public void remove(@NotNull PsiElement beforeElement) {
-        try {
-            checkFilesAccess(beforeElement);
-        } catch (FileNotValidException e) {
-            LOGGER.error(e);
-            Messages.showErrorDialog("apiDoc plugin is not available, cause: " + e.getMessage(), "apiDoc plugin");
-            return;
-        }
-        WriteCommandAction.writeCommandAction(beforeElement.getProject(), beforeElement.getContainingFile()).withName(WRITE_JAVADOC_COMMAND_NAME)
-                .withGroupId(WRITE_JAVADOC_COMMAND_GROUP).run(() -> {
-            if (beforeElement.getFirstChild() instanceof PsiDocComment) {
-                deleteJavaDoc(beforeElement);
-            }
-        });
-    }
 
     private static void deleteJavaDoc(PsiElement theElement) {
         pushPostponedChanges(theElement);
@@ -148,7 +112,7 @@ public class JavaDocWriterImpl implements JavaDocWriter {
     }
 
     private static void pushPostponedChanges(PsiElement element) {
-        Editor editor = PsiUtilBase.findEditor(element.getContainingFile());
+        Editor editor = PsiEditorUtil.Service.getInstance().findEditorByPsiElement(element);
         if (editor != null) {
             PsiDocumentManager.getInstance(element.getProject())
                     .doPostponedOperationsAndUnblockDocument(editor.getDocument());
