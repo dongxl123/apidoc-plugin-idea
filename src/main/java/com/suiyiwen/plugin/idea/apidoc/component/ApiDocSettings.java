@@ -2,7 +2,6 @@ package com.suiyiwen.plugin.idea.apidoc.component;
 
 import com.intellij.openapi.components.*;
 import com.intellij.openapi.project.Project;
-import com.suiyiwen.plugin.idea.apidoc.constant.ApiDocConstant;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -16,9 +15,9 @@ import org.jetbrains.annotations.Nullable;
 )
 public class ApiDocSettings implements PersistentStateComponent<ApiDocSettings> {
 
-    private int depth = ApiDocConstant.OBJECT_EXTRACT_MAX_DEPTH;
+    private int depth;
 
-    private String version = ApiDocConstant.DEFAULT_VERSION;
+    private String version;
 
     public int getDepth() {
         return depth;
