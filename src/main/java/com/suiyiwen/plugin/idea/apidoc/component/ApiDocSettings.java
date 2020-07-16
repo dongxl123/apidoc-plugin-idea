@@ -1,9 +1,7 @@
 package com.suiyiwen.plugin.idea.apidoc.component;
 
-import com.intellij.openapi.components.PersistentStateComponent;
-import com.intellij.openapi.components.ServiceManager;
-import com.intellij.openapi.components.State;
-import com.intellij.openapi.components.Storage;
+import com.intellij.openapi.components.*;
+import com.intellij.openapi.project.Project;
 import com.suiyiwen.plugin.idea.apidoc.constant.ApiDocConstant;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -14,11 +12,13 @@ import org.jetbrains.annotations.Nullable;
  */
 @State(
         name = "ApiDocSettings",
-        storages = @Storage(value = "apidoc.xml")
+        storages = @Storage(StoragePathMacros.WORKSPACE_FILE)
 )
 public class ApiDocSettings implements PersistentStateComponent<ApiDocSettings> {
 
     private int depth = ApiDocConstant.OBJECT_EXTRACT_MAX_DEPTH;
+
+    private String version = ApiDocConstant.DEFAULT_VERSION;
 
     public int getDepth() {
         return depth;
@@ -28,8 +28,16 @@ public class ApiDocSettings implements PersistentStateComponent<ApiDocSettings> 
         this.depth = depth;
     }
 
-    public static ApiDocSettings getInstance() {
-        return ServiceManager.getService(ApiDocSettings.class);
+    public String getVersion() {
+        return version;
+    }
+
+    public void setVersion(String version) {
+        this.version = version;
+    }
+
+    public static ApiDocSettings getInstance(@NotNull Project project) {
+        return ServiceManager.getService(project, ApiDocSettings.class);
     }
 
     @Nullable
@@ -41,5 +49,6 @@ public class ApiDocSettings implements PersistentStateComponent<ApiDocSettings> 
     @Override
     public void loadState(@NotNull ApiDocSettings state) {
         this.depth = state.getDepth();
+        this.version = state.getVersion();
     }
 }
