@@ -2,7 +2,6 @@ package com.suiyiwen.plugin.idea.apidoc.manager;
 
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.LangDataKeys;
-import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.Messages;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiMethod;
@@ -20,7 +19,6 @@ public class ApiDocActionManger {
 
     public void showDialog(AnActionEvent e) {
         PsiElement psiElement = e.getData(LangDataKeys.PSI_ELEMENT);
-        Project project = e.getProject();
         if (psiElement instanceof PsiMethod) {
             PsiMethod psiMethod = (PsiMethod) psiElement;
             if (!PsiHttpUtils.INSTANCE.isController(psiMethod.getContainingClass())) {

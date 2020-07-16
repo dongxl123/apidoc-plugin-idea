@@ -95,7 +95,7 @@
     <depends>com.intellij.modules.lang</depends>
     -->
     <extensions defaultExtensionNs="com.intellij">
-        <applicationService serviceImplementation="com.suiyiwen.plugin.idea.apidoc.component.ApiDocSettings"/>
+        <projectService serviceImplementation="com.suiyiwen.plugin.idea.apidoc.component.ApiDocSettings"/>
         <projectConfigurable instance="com.suiyiwen.plugin.idea.apidoc.ui.ApiDocSettingsPage"/>
         <applicationService serviceInterface="com.suiyiwen.plugin.idea.apidoc.component.operation.JavaDocWriter"
                             serviceImplementation="com.suiyiwen.plugin.idea.apidoc.component.operation.impl.JavaDocWriterImpl"/>

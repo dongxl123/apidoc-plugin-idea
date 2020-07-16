@@ -5,6 +5,7 @@ import com.intellij.psi.PsiElement;
 import com.intellij.ui.components.JBRadioButton;
 import com.intellij.ui.components.JBScrollPane;
 import com.suiyiwen.plugin.idea.apidoc.bean.dialog.DialogModel;
+import com.suiyiwen.plugin.idea.apidoc.component.ApiDocSettings;
 import com.suiyiwen.plugin.idea.apidoc.constant.ApiDocConstant;
 import com.suiyiwen.plugin.idea.apidoc.helper.DialogHelper;
 import com.suiyiwen.plugin.idea.apidoc.utils.FieldBeanTreeUtils;
@@ -68,8 +69,19 @@ public class ApiDocGenerateDialog extends DialogWrapper {
 
     @Override
     public void doOKAction() {
+        saveSettings();
         generateComment();
         super.doOKAction();
+    }
+
+    private void saveSettings() {
+        ApiDocSettings settings = ApiDocSettings.getInstance(psiElement.getProject());
+        if (settings == null) {
+            return;
+        }
+        if (StringUtils.isNotBlank(versionTextField.getText())) {
+            settings.setVersion(versionTextField.getText());
+        }
     }
 
     private void generateComment() {

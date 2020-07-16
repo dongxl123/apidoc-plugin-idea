@@ -3,6 +3,8 @@ package com.suiyiwen.plugin.idea.apidoc.ui;
 import com.intellij.openapi.options.Configurable;
 import com.intellij.openapi.options.ConfigurationException;
 import com.intellij.openapi.options.SearchableConfigurable;
+import com.intellij.openapi.project.Project;
+import com.intellij.openapi.project.ProjectManager;
 import com.suiyiwen.plugin.idea.apidoc.component.ApiDocSettings;
 import com.suiyiwen.plugin.idea.apidoc.constant.ApiDocConstant;
 import org.apache.commons.lang3.StringUtils;
@@ -19,7 +21,11 @@ import javax.swing.*;
 public class ApiDocSettingsPage implements SearchableConfigurable, Configurable.NoScroll {
     private JPanel myGeneralPanel;
     private JTextField depthTextField;
-    private ApiDocSettings apiDocSettings = ApiDocSettings.getInstance();
+    private ApiDocSettings apiDocSettings;
+
+    public ApiDocSettingsPage(@NotNull Project project) {
+        apiDocSettings = ApiDocSettings.getInstance(project);
+    }
 
     @NotNull
     @Override

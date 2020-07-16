@@ -6,6 +6,7 @@ import com.intellij.psi.PsiMethod;
 import com.intellij.psi.javadoc.PsiDocComment;
 import com.suiyiwen.plugin.idea.apidoc.bean.apidoc.ApiDocCommentBean;
 import com.suiyiwen.plugin.idea.apidoc.bean.dialog.*;
+import com.suiyiwen.plugin.idea.apidoc.component.ApiDocSettings;
 import com.suiyiwen.plugin.idea.apidoc.component.operation.JavaDocWriter;
 import com.suiyiwen.plugin.idea.apidoc.constant.ApiDocConstant;
 import com.suiyiwen.plugin.idea.apidoc.ui.ApiDocGenerateDialog;
@@ -100,7 +101,12 @@ public enum DialogHelper {
         DialogModel dialogModel = new DialogModel();
         dialogModel.setGroupName(NewDialogModelParseUtils.INSTANCE.parseApiGroup(element));
         dialogModel.setName(NewDialogModelParseUtils.INSTANCE.parseApiName(element));
-        dialogModel.setVersion(ApiDocConstant.DEFAULT_VERSION);
+        ApiDocSettings settings = ApiDocSettings.getInstance(element.getProject());
+        if (settings != null && StringUtils.isNotBlank(settings.getVersion())) {
+            dialogModel.setVersion(settings.getVersion());
+        } else {
+            dialogModel.setVersion(ApiDocConstant.DEFAULT_VERSION);
+        }
         dialogModel.setRequestMethod(NewDialogModelParseUtils.INSTANCE.parseRequestMethod(element));
         dialogModel.setRequestUrl(NewDialogModelParseUtils.INSTANCE.parseRequestUrl(element));
         dialogModel.setRequestTitle(NewDialogModelParseUtils.INSTANCE.parseRequestTitle(element));

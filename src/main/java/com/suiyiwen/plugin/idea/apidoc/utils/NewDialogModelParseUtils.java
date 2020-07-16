@@ -27,8 +27,6 @@ public enum NewDialogModelParseUtils {
 
     INSTANCE;
 
-    private ApiDocSettings apiDocSettings = ApiDocSettings.getInstance();
-
     public String parseRequestMethod(PsiMethod element) {
         HttpRequestMethod requestMethod = PsiHttpUtils.INSTANCE.getHttpRequestMethod(element);
         if (requestMethod == null) {
@@ -219,6 +217,7 @@ public enum NewDialogModelParseUtils {
         if (StringUtils.isBlank(fieldBean.getDescription()) && PsiTypesUtils.INSTANCE.isEnum(psiType, context)) {
             fieldBean.setDescription(PsiTypesUtils.INSTANCE.generateEnumDescription(psiType, context));
         }
+        ApiDocSettings apiDocSettings = ApiDocSettings.getInstance(context.getProject());
         if (depth >= apiDocSettings.getDepth()) {
             return fieldBean;
         }
