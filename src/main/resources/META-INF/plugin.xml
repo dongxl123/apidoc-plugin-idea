@@ -13,6 +13,10 @@
     ]]></description>
 
     <change-notes><![CDATA[
+    <h2>v3.0.1</h2>
+    <ul>
+      <li>new features: persistent version</li>
+    </ul>
     <h2>v3.0.0</h2>
     <ul>
       <li>support version since 201 </li>
