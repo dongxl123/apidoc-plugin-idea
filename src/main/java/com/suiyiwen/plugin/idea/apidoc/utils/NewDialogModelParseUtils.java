@@ -217,8 +217,7 @@ public enum NewDialogModelParseUtils {
         if (StringUtils.isBlank(fieldBean.getDescription()) && PsiTypesUtils.INSTANCE.isEnum(psiType, context)) {
             fieldBean.setDescription(PsiTypesUtils.INSTANCE.generateEnumDescription(psiType, context));
         }
-        ApiDocSettings apiDocSettings = ApiDocSettings.getInstance(context.getProject());
-        if (depth >= apiDocSettings.getDepth()) {
+        if (depth >= ApiDocSettings.getActualDepth(context.getProject())) {
             return fieldBean;
         }
         List<FieldBean> childFieldList = parseRefFieldBeanList(psiType, depth + 1, context);

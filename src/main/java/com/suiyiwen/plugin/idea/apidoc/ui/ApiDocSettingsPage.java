@@ -43,7 +43,7 @@ public class ApiDocSettingsPage implements SearchableConfigurable, Configurable.
     @Nullable
     @Override
     public JComponent createComponent() {
-        initSettings();
+        initFromSettings();
         return myGeneralPanel;
     }
 
@@ -57,20 +57,13 @@ public class ApiDocSettingsPage implements SearchableConfigurable, Configurable.
         ApiDocSettings.getInstance(project).setDepth(getDepthValue());
     }
 
-    private void initSettings() {
-        int depth = ApiDocSettings.getInstance(project).getDepth();
-        //当前项目无配置
-        if (depth <= 0) {
-            if (!project.isDefault()) {
-                //非默认项目，使用默认项目配置
-                depth = ApiDocSettings.getInstance(ProjectManager.getInstance().getDefaultProject()).getDepth();
-            }
-            //默认项目或非默认项目获取不到配置，使用默认值
-            if (depth <= 0) {
-                depth = ApiDocConstant.OBJECT_EXTRACT_MAX_DEPTH;
-            }
-            ApiDocSettings.getInstance(project).setDepth(depth);
-        }
+    @Override
+    public void reset() {
+        initFromSettings();
+    }
+
+    private void initFromSettings() {
+        int depth = ApiDocSettings.getActualDepth(project);
         depthTextField.setText(String.valueOf(depth));
     }
 
