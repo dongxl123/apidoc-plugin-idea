@@ -28,6 +28,9 @@ Default **Option + Ctrl + Shift + p**(Mac), **Alt + Ctrl + Shift + p** (win)
 
 
 ## Version Info
+v3.0.1
+>
+* new features: persistent version
 
 v3.0.0
 >
