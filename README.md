@@ -28,6 +28,10 @@ Default **Option + Ctrl + Shift + p**(Mac), **Alt + Ctrl + Shift + p** (win)
 
 
 ## Version Info
+v3.0.2
+>
+* new features: request parameter support class `MultipartFile`
+
 v3.0.1
 >
 * new features: persistent version

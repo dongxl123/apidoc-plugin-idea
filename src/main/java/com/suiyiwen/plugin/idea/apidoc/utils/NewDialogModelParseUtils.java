@@ -89,9 +89,6 @@ public enum NewDialogModelParseUtils {
             if (PsiTypesUtils.INSTANCE.isAssignableFrom(ApiDocConstant.HTTP_SERVLET_RESPONSE_CLASS_NAME, psiParameter.getType(), psiParameter)) {
                 return false;
             }
-            if (PsiTypesUtils.INSTANCE.isAssignableFrom(ApiDocConstant.MULTIPART_FILE_CLASS_NAME, psiParameter.getType(), psiParameter)) {
-                return false;
-            }
             return true;
         }
         if (PsiAnnotationUtils.INSTANCE.hasAnnotation(psiParameter.getModifierList(), AnnotationClass.REQUEST_BODY.getClassName())) {
