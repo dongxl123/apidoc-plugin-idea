@@ -23,7 +23,7 @@
     </ul>
     <h2>v3.0.0</h2>
     <ul>
-      <li>support version since 201 </li>
+      <li>support version since 192 </li>
       <li>Resolve conflict: timeout </li>
     </ul>
     <h2>v2.3</h2>
@@ -94,7 +94,7 @@
     </change-notes>
 
     <!-- please see https://confluence.jetbrains.com/display/IDEADEV/Build+Number+Ranges for text -->
-    <idea-version since-build="201"/>
+    <idea-version since-build="192"/>
     <depends>com.intellij.modules.java</depends>
 
     <!-- please see https://confluence.jetbrains.com/display/IDEADEV/Plugin+Compatibility+with+IntelliJ+Platform+Products

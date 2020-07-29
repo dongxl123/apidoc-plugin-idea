@@ -38,7 +38,7 @@ v3.0.1
 
 v3.0.0
 >
-* support version since 201
+* support version since 192
 * Resolve conflict: timeout
   
 v2.3
