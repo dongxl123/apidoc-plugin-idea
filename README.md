@@ -28,6 +28,13 @@ Default **Option + Ctrl + Shift + p**(Mac), **Alt + Ctrl + Shift + p** (win)
 
 
 ## Version Info
+v1.8-6
+>
+* new features: request method support `PATCH`
+* new features: request parameter support class `MultipartFile`
+* new features: persistent version
+
+
 v1.8-5
 >
 * fix bug: request url

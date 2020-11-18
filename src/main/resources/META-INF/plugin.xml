@@ -13,6 +13,12 @@
     ]]></description>
 
     <change-notes><![CDATA[
+    <h2>v1.8-6</h2>
+    <ul>
+      <li>new features: request method support <code>PATCH</code></li>
+	  <li>new features: request parameter support class <code>MultipartFile</code></li>
+	  <li>new features: persistent version</li>
+    </ul>
     <h2>v1.8-5</h2>
     <ul>
       <li>fix bug: request url</li>
