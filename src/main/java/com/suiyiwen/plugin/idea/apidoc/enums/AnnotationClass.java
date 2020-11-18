@@ -10,6 +10,7 @@ public enum AnnotationClass {
     GET_MAPPING("org.springframework.web.bind.annotation.GetMapping"),
     PUT_MAPPING("org.springframework.web.bind.annotation.PutMapping"),
     DELETE_MAPPING("org.springframework.web.bind.annotation.DeleteMapping"),
+    PATCH_MAPPING("org.springframework.web.bind.annotation.PatchMapping"),
     REQUEST_MAPPING("org.springframework.web.bind.annotation.RequestMapping"),
     REQUEST_BODY("org.springframework.web.bind.annotation.RequestBody"),
     REST_CONTROLLER("org.springframework.web.bind.annotation.RestController"),

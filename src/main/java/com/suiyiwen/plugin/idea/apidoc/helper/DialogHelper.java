@@ -9,6 +9,7 @@ import com.suiyiwen.plugin.idea.apidoc.bean.dialog.*;
 import com.suiyiwen.plugin.idea.apidoc.component.ApiDocSettings;
 import com.suiyiwen.plugin.idea.apidoc.component.operation.JavaDocWriter;
 import com.suiyiwen.plugin.idea.apidoc.constant.ApiDocConstant;
+import com.suiyiwen.plugin.idea.apidoc.enums.HttpRequestMethod;
 import com.suiyiwen.plugin.idea.apidoc.ui.ApiDocGenerateDialog;
 import com.suiyiwen.plugin.idea.apidoc.utils.*;
 import org.apache.commons.collections.CollectionUtils;
@@ -124,6 +125,9 @@ public enum DialogHelper {
             return oldModel;
         }
         if (oldModel == null) {
+            if(StringUtils.isBlank(newModel.getRequestMethod())){
+                newModel.setRequestMethod(HttpRequestMethod.GET.name());
+            }
             return newModel;
         }
         DialogModel mergeModel = newModel;
@@ -145,8 +149,12 @@ public enum DialogHelper {
         if (StringUtils.isBlank(mergeModel.getRequestUrl())) {
             mergeModel.setRequestUrl(oldModel.getRequestUrl());
         }
-        if (StringUtils.isNotBlank(oldModel.getRequestMethod())) {
-            mergeModel.setRequestMethod(oldModel.getRequestMethod());
+        if (StringUtils.isBlank(mergeModel.getRequestMethod())) {
+            if (StringUtils.isNotBlank(oldModel.getRequestMethod())) {
+                mergeModel.setRequestMethod(oldModel.getRequestMethod());
+            } else {
+                mergeModel.setRequestMethod(HttpRequestMethod.GET.name());
+            }
         }
         mergeModel.setRequestParameter(mergeExample(newModel.getRequestParameter(), oldModel.getRequestParameter()));
         mergeModel.setRequestBody(mergeExample(newModel.getRequestBody(), oldModel.getRequestBody()));
