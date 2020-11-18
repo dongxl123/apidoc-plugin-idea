@@ -38,6 +38,8 @@ public enum PsiHttpUtils {
                     return HttpRequestMethod.DELETE;
                 } else if (AnnotationClass.PUT_MAPPING.getClassName().equals(qualifiedName)) {
                     return HttpRequestMethod.PUT;
+                } else if (AnnotationClass.PATCH_MAPPING.getClassName().equals(qualifiedName)) {
+                    return HttpRequestMethod.PATCH;
                 } else if (AnnotationClass.REQUEST_MAPPING.getClassName().equals(qualifiedName)) {
                     String methodText = PsiAnnotationUtils.INSTANCE.getAttributeText(annotation, "method");
                     if (StringUtils.isNotBlank(methodText)) {
@@ -65,7 +67,7 @@ public enum PsiHttpUtils {
                 }
             }
         }
-        return HttpRequestMethod.GET;
+        return null;
     }
 
     public String getHttpRequestUrl(PsiMethod element) {

@@ -12,6 +12,7 @@ public enum HttpRequestMethod {
     GET("RequestMethod.GET"),
     DELETE("RequestMethod.DELETE"),
     PUT("RequestMethod.PUT"),
+    PATCH("RequestMethod.PATCH"),
     ;
     private String requestMethodText;
 
