@@ -86,7 +86,7 @@
     </change-notes>
 
     <!-- please see https://confluence.jetbrains.com/display/IDEADEV/Build+Number+Ranges for text -->
-    <idea-version since-build="162" until-build="191.*"/>
+    <idea-version since-build="182" until-build="191.*"/>
     <depends>com.intellij.modules.java</depends>
 
     <!-- please see https://confluence.jetbrains.com/display/IDEADEV/Plugin+Compatibility+with+IntelliJ+Platform+Products
