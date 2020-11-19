@@ -4,6 +4,7 @@ import com.intellij.openapi.options.Configurable;
 import com.intellij.openapi.options.ConfigurationException;
 import com.intellij.openapi.options.SearchableConfigurable;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.project.ProjectManager;
 import com.suiyiwen.plugin.idea.apidoc.component.ApiDocSettings;
 import com.suiyiwen.plugin.idea.apidoc.constant.ApiDocConstant;
 import org.apache.commons.lang3.StringUtils;
@@ -20,10 +21,10 @@ import javax.swing.*;
 public class ApiDocSettingsPage implements SearchableConfigurable, Configurable.NoScroll {
     private JPanel myGeneralPanel;
     private JTextField depthTextField;
-    private ApiDocSettings apiDocSettings;
+    private Project project;
 
     public ApiDocSettingsPage(@NotNull Project project) {
-        apiDocSettings = ApiDocSettings.getInstance(project);
+        this.project = project;
     }
 
     @NotNull
@@ -32,11 +33,6 @@ public class ApiDocSettingsPage implements SearchableConfigurable, Configurable.
         return getDisplayName();
     }
 
-    @Nullable
-    @Override
-    public Runnable enableSearch(String option) {
-        return null;
-    }
 
     @Nls(capitalization = Nls.Capitalization.Title)
     @Override
@@ -46,24 +42,29 @@ public class ApiDocSettingsPage implements SearchableConfigurable, Configurable.
 
     @Nullable
     @Override
-    public String getHelpTopic() {
-        return null;
-    }
-
-    @Nullable
-    @Override
     public JComponent createComponent() {
+        initFromSettings();
         return myGeneralPanel;
     }
 
     @Override
     public boolean isModified() {
-        return apiDocSettings.getDepth() != getDepthValue();
+        return ApiDocSettings.getInstance(project).getDepth() != getDepthValue();
     }
 
     @Override
     public void apply() throws ConfigurationException {
-        apiDocSettings.setDepth(getDepthValue());
+        ApiDocSettings.getInstance(project).setDepth(getDepthValue());
+    }
+
+    @Override
+    public void reset() {
+        initFromSettings();
+    }
+
+    private void initFromSettings() {
+        int depth = ApiDocSettings.getActualDepth(project);
+        depthTextField.setText(String.valueOf(depth));
     }
 
     private int getDepthValue() {
@@ -78,13 +79,4 @@ public class ApiDocSettingsPage implements SearchableConfigurable, Configurable.
         return depth;
     }
 
-    @Override
-    public void reset() {
-        depthTextField.setText(String.valueOf(apiDocSettings.getDepth()));
-    }
-
-    @Override
-    public void disposeUIResources() {
-
-    }
 }

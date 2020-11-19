@@ -43,4 +43,5 @@ public interface ApiDocConstant {
     int UI_TITLE_SIZE = 30;
     int UI_MIN_SIZE = 50;
     int UI_MAX_SIZE = 300;
+    int DATA_CONTEXT_BLOCKING_TIMEOUT = 5 * 1000;
 }

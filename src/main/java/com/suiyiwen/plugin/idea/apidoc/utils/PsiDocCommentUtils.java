@@ -1,10 +1,9 @@
 package com.suiyiwen.plugin.idea.apidoc.utils;
 
-import com.intellij.ide.DataManager;
-import com.intellij.openapi.actionSystem.CommonDataKeys;
-import com.intellij.openapi.project.Project;
 import com.intellij.psi.JavaPsiFacade;
+import com.intellij.psi.PsiElement;
 import com.intellij.psi.javadoc.PsiDocComment;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * @author dongxuanliang252
@@ -14,9 +13,8 @@ public enum PsiDocCommentUtils {
 
     INSTANCE;
 
-    public PsiDocComment createPsiDocComment(String commentText) {
-        Project project = CommonDataKeys.PROJECT.getData(DataManager.getInstance().getDataContext());
-        return JavaPsiFacade.getElementFactory(project).createDocCommentFromText(commentText);
+    public PsiDocComment createPsiDocComment(String commentText, @NotNull PsiElement context) {
+        return JavaPsiFacade.getElementFactory(context.getProject()).createDocCommentFromText(commentText);
     }
 
 }

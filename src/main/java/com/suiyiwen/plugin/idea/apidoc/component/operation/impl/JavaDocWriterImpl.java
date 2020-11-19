@@ -1,7 +1,5 @@
 package com.suiyiwen.plugin.idea.apidoc.component.operation.impl;
 
-import com.intellij.openapi.application.Result;
-import com.intellij.openapi.application.RunResult;
 import com.intellij.openapi.command.WriteCommandAction;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.editor.Editor;
@@ -15,10 +13,10 @@ import com.intellij.psi.PsiWhiteSpace;
 import com.intellij.psi.codeStyle.CodeStyleManager;
 import com.intellij.psi.impl.source.tree.PsiWhiteSpaceImpl;
 import com.intellij.psi.javadoc.PsiDocComment;
-import com.intellij.psi.util.PsiUtilBase;
+import com.intellij.psi.util.PsiEditorUtil;
+import com.suiyiwen.plugin.idea.apidoc.component.operation.JavaDocWriter;
 import com.suiyiwen.plugin.idea.apidoc.exception.FileNotValidException;
 import com.suiyiwen.plugin.idea.apidoc.exception.NotFoundElementException;
-import com.suiyiwen.plugin.idea.apidoc.component.operation.JavaDocWriter;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collections;
@@ -30,27 +28,7 @@ import java.util.Collections;
  */
 public class JavaDocWriterImpl implements JavaDocWriter {
 
-    /**
-     * The constant COMPONENT_NAME.
-     */
-    public static final String COMPONENT_NAME = "ApiDocJavaDocWriter";
-
     private static final Logger LOGGER = Logger.getInstance(JavaDocWriterImpl.class);
-
-    @Override
-    public void initComponent() {
-    }
-
-    @Override
-    public void disposeComponent() {
-    }
-
-    @NotNull
-    @Override
-    public String getComponentName() {
-        return COMPONENT_NAME;
-
-    }
 
     @Override
     public void write(@NotNull PsiDocComment javaDoc, @NotNull PsiElement beforeElement) {
@@ -61,114 +39,35 @@ public class JavaDocWriterImpl implements JavaDocWriter {
             Messages.showErrorDialog("apiDoc plugin is not available, cause: " + e.getMessage(), "apiDoc plugin");
             return;
         }
-
-        WriteCommandAction command = new WriteJavaDocActionImpl(javaDoc, beforeElement);
-        RunResult result = command.execute();
-        if (result.hasException()) {
-            LOGGER.error(result.getThrowable());
-            Messages.showErrorDialog("apiDoc plugin is not available, cause: " + result.getThrowable().getMessage(), "apiDoc plugin");
-        }
-    }
-
-    @Override
-    public void remove(@NotNull PsiElement beforeElement) {
-        try {
-            checkFilesAccess(beforeElement);
-        } catch (FileNotValidException e) {
-            LOGGER.error(e);
-            Messages.showErrorDialog("apiDoc plugin is not available, cause: " + e.getMessage(), "apiDoc plugin");
-            return;
-        }
-
-        WriteCommandAction command = new RemoveJavaDocActionImpl(beforeElement);
-        RunResult result = command.execute();
-        if (result.hasException()) {
-            LOGGER.error(result.getThrowable());
-            Messages.showErrorDialog("apiDoc plugin is not available, cause: " + result.getThrowable().getMessage(), "apiDoc plugin");
-        }
-    }
-
-    /**
-     * The type Write command action impl.
-     *
-     * @author Sergey Timofiychuk
-     */
-    private static class WriteJavaDocActionImpl extends WriteCommandAction {
-
-        private PsiDocComment javaDoc;
-        private PsiElement element;
-
-        /**
-         * Instantiates a new Write java doc action impl.
-         *
-         * @param javaDoc the java doc
-         * @param element the element
-         */
-        protected WriteJavaDocActionImpl(@NotNull PsiDocComment javaDoc, @NotNull PsiElement element) {
-            super(
-                    element.getProject(),
-                    WRITE_JAVADOC_COMMAND_NAME,
-                    WRITE_JAVADOC_COMMAND_GROUP,
-                    element.getContainingFile());
-            this.javaDoc = javaDoc;
-            this.element = element;
-        }
-
-        @Override
-        protected void run(@NotNull Result result) throws Throwable {
+        WriteCommandAction.writeCommandAction(beforeElement.getProject(), beforeElement.getContainingFile()).withName(WRITE_JAVADOC_COMMAND_NAME)
+                .withGroupId(WRITE_JAVADOC_COMMAND_GROUP).run(() -> {
             if (javaDoc == null) {
                 return;
             }
-            if (element.getFirstChild() instanceof PsiDocComment) {
-                replaceJavaDoc(element, javaDoc);
+            if (beforeElement.getFirstChild() instanceof PsiDocComment) {
+                replaceJavaDoc(beforeElement, javaDoc);
             } else {
-                addJavaDoc(element, javaDoc);
+                addJavaDoc(beforeElement, javaDoc);
             }
-            ensureWhitespaceAfterJavaDoc(element);
-            reformatJavaDoc(element);
-        }
-
-        private void ensureWhitespaceAfterJavaDoc(PsiElement element) {
-            // this method is required to create well formatted javadocs in enums
-            PsiElement firstChild = element.getFirstChild();
-            if (!PsiDocComment.class.isAssignableFrom(firstChild.getClass())) {
-                return;
-            }
-            PsiElement nextElement = firstChild.getNextSibling();
-            if (PsiWhiteSpace.class.isAssignableFrom(nextElement.getClass())) {
-                return;
-            }
-            pushPostponedChanges(element);
-            element.getNode().addChild(new PsiWhiteSpaceImpl("\n"), nextElement.getNode());
-        }
+            ensureWhitespaceAfterJavaDoc(beforeElement);
+            reformatJavaDoc(beforeElement);
+        });
     }
 
-    private static class RemoveJavaDocActionImpl extends WriteCommandAction {
-
-        private PsiElement element;
-
-        /**
-         * Instantiates a new Remove java doc action impl.
-         *
-         * @param element the element
-         */
-        protected RemoveJavaDocActionImpl(PsiElement element) {
-            super(
-                    element.getProject(),
-                    WRITE_JAVADOC_COMMAND_NAME,
-                    WRITE_JAVADOC_COMMAND_GROUP,
-                    element.getContainingFile());
-            this.element = element;
+    private void ensureWhitespaceAfterJavaDoc(PsiElement element) {
+        // this method is required to create well formatted javadocs in enums
+        PsiElement firstChild = element.getFirstChild();
+        if (!PsiDocComment.class.isAssignableFrom(firstChild.getClass())) {
+            return;
         }
-
-        @Override
-        protected void run(@NotNull Result result) throws Throwable {
-            if (element.getFirstChild() instanceof PsiDocComment) {
-                deleteJavaDoc(this.element);
-            }
+        PsiElement nextElement = firstChild.getNextSibling();
+        if (PsiWhiteSpace.class.isAssignableFrom(nextElement.getClass())) {
+            return;
         }
-
+        pushPostponedChanges(element);
+        element.getNode().addChild(new PsiWhiteSpaceImpl("\n"), nextElement.getNode());
     }
+
 
     private static void deleteJavaDoc(PsiElement theElement) {
         pushPostponedChanges(theElement);
@@ -213,7 +112,7 @@ public class JavaDocWriterImpl implements JavaDocWriter {
     }
 
     private static void pushPostponedChanges(PsiElement element) {
-        Editor editor = PsiUtilBase.findEditor(element.getContainingFile());
+        Editor editor = PsiEditorUtil.Service.getInstance().findEditorByPsiElement(element);
         if (editor != null) {
             PsiDocumentManager.getInstance(element.getProject())
                     .doPostponedOperationsAndUnblockDocument(editor.getDocument());

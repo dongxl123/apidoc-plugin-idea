@@ -56,8 +56,8 @@ public class CheckTreeCellProvider extends ComponentProvider<JPanel> {
 
         //  使用BorderLayout布局，依次放置TristateCheckBox和JLabel
         rendererComponent.setLayout(new BorderLayout());
-        rendererComponent.add(_checkBox);
-        rendererComponent.add(_label, BorderLayout.LINE_END);
+        rendererComponent.add(_checkBox, BorderLayout.WEST);
+        rendererComponent.add(_label, BorderLayout.CENTER);
     }
 
     @Override
