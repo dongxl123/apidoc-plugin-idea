@@ -1,12 +1,15 @@
 package com.suiyiwen.plugin.idea.apidoc.utils;
 
+import com.intellij.ide.DataManager;
+import com.intellij.openapi.actionSystem.CommonDataKeys;
+import com.intellij.openapi.project.Project;
 import com.intellij.psi.*;
 import com.intellij.psi.impl.source.PsiClassReferenceType;
 import com.suiyiwen.plugin.idea.apidoc.constant.ApiDocConstant;
 import com.suiyiwen.plugin.idea.apidoc.enums.FieldType;
+import com.suiyiwen.plugin.idea.apidoc.enums.JavaDocElements;
 import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,31 +47,32 @@ public enum PsiTypesUtils {
         return CommonClassNames.JAVA_LANG_STRING.equals(canonicalText);
     }
 
-    public boolean isIterable(PsiType psiType, @NotNull PsiElement context) {
-        return isAssignableFrom(CommonClassNames.JAVA_LANG_ITERABLE, psiType, context) || isAssignableFrom(CommonClassNames.JAVA_UTIL_ITERATOR, psiType, context);
+    public boolean isIterable(PsiType psiType) {
+        return isAssignableFrom(CommonClassNames.JAVA_LANG_ITERABLE, psiType) || isAssignableFrom(CommonClassNames.JAVA_UTIL_ITERATOR, psiType);
     }
 
-    public boolean isEnum(PsiType psiType, @NotNull PsiElement context) {
-        return isAssignableFrom(CommonClassNames.JAVA_LANG_ENUM, psiType, context);
+    public boolean isEnum(PsiType psiType) {
+        return isAssignableFrom(CommonClassNames.JAVA_LANG_ENUM, psiType);
     }
 
-    public boolean isMap(PsiType psiType, @NotNull PsiElement context) {
-        return isAssignableFrom(CommonClassNames.JAVA_UTIL_MAP, psiType, context);
+    public boolean isMap(PsiType psiType) {
+        return isAssignableFrom(CommonClassNames.JAVA_UTIL_MAP, psiType);
     }
 
-    public boolean isAssignableFrom(String fQClassName, PsiType psiType, @NotNull PsiElement context) {
-        PsiType fqType = createPsiType(fQClassName, context);
+    public boolean isAssignableFrom(String fQClassName, PsiType psiType) {
+        PsiType fqType = createPsiType(fQClassName);
         return fqType.isAssignableFrom(psiType);
     }
 
-    public PsiType createPsiType(String fQClassName, @NotNull PsiElement context) {
-        return JavaPsiFacade.getElementFactory(context.getProject()).createTypeByFQClassName(fQClassName);
+    public PsiType createPsiType(String fQClassName) {
+        Project project = CommonDataKeys.PROJECT.getData(DataManager.getInstance().getDataContext());
+        return JavaPsiFacade.getElementFactory(project).createTypeByFQClassName(fQClassName);
     }
 
-    public boolean isExtractEndPsiType(PsiType psiType, @NotNull PsiElement context) {
+    public boolean isExtractEndPsiType(PsiType psiType) {
         if (psiType instanceof PsiClassType) {
-            if (isBoxedType(psiType) || isString(psiType) || isMap(psiType, context) || isEnum(psiType, context) || isNumber(psiType, context)
-                    || isCharacter(psiType) || isCharSequence(psiType, context) || isBoolean(psiType) || isDate(psiType, context)) {
+            if (isBoxedType(psiType) || isString(psiType) || isMap(psiType) || isEnum(psiType) || isNumber(psiType)
+                    || isCharacter(psiType) || isCharSequence(psiType) || isBoolean(psiType) || isDate(psiType)) {
                 return true;
             }
         } else if (psiType instanceof PsiPrimitiveType) {
@@ -92,8 +96,8 @@ public enum PsiTypesUtils {
         return psiType;
     }
 
-    public String generateEnumDescription(PsiType psiType, @NotNull PsiElement context) {
-        if (isEnum(psiType, context)) {
+    public String generateEnumDescription(PsiType psiType) {
+        if (isEnum(psiType)) {
             StringBuilder sb = new StringBuilder();
             PsiClass psiClass = ((PsiClassReferenceType) psiType).resolve();
             for (PsiField psiField : psiClass.getFields()) {
@@ -111,12 +115,12 @@ public enum PsiTypesUtils {
         return null;
     }
 
-    public boolean isNumber(PsiType psiType, @NotNull PsiElement context) {
-        return isAssignableFrom(CommonClassNames.JAVA_LANG_NUMBER, psiType, context);
+    public boolean isNumber(PsiType psiType) {
+        return isAssignableFrom(CommonClassNames.JAVA_LANG_NUMBER, psiType);
     }
 
-    public boolean isCharSequence(PsiType psiType, @NotNull PsiElement context) {
-        return isAssignableFrom(JAVA_LANG_CHAR_SEQUENCE, psiType, context);
+    public boolean isCharSequence(PsiType psiType) {
+        return isAssignableFrom(JAVA_LANG_CHAR_SEQUENCE, psiType);
     }
 
     public boolean isCharacter(PsiType psiType) {
@@ -129,23 +133,23 @@ public enum PsiTypesUtils {
         return CommonClassNames.JAVA_LANG_BOOLEAN.equals(canonicalText);
     }
 
-    public boolean isDate(PsiType psiType, @NotNull PsiElement context) {
-        return isAssignableFrom(CommonClassNames.JAVA_UTIL_DATE, psiType, context);
+    public boolean isDate(PsiType psiType) {
+        return isAssignableFrom(CommonClassNames.JAVA_UTIL_DATE, psiType);
     }
 
-    public FieldType getFieldType(PsiType psiType, @NotNull PsiElement context) {
+    public FieldType getFieldType(PsiType psiType) {
         if (psiType instanceof PsiPrimitiveType) {
             String boxedTypeName = ((PsiPrimitiveType) psiType).getBoxedTypeName();
-            return getFieldType(createPsiType(boxedTypeName, context), context);
-        } else if (psiType instanceof PsiArrayType || isIterable(psiType, context)) {
+            return getFieldType(PsiTypesUtils.INSTANCE.createPsiType(boxedTypeName));
+        } else if (psiType instanceof PsiArrayType || isIterable(psiType)) {
             return FieldType.Array;
         } else if (isBoolean(psiType)) {
             return FieldType.Boolean;
-        } else if (isNumber(psiType, context) || isDate(psiType, context)) {
+        } else if (isNumber(psiType) || isDate(psiType)) {
             return FieldType.Number;
-        } else if (isCharSequence(psiType, context) || isCharacter(psiType) || isEnum(psiType, context)) {
+        } else if (isCharSequence(psiType) || isCharacter(psiType) || isEnum(psiType)) {
             return FieldType.String;
-        } else if (isMap(psiType, context)) {
+        } else if (isMap(psiType)) {
             return FieldType.Object;
         }
         return FieldType.Object;

@@ -36,7 +36,7 @@
           </grid>
         </constraints>
         <properties>
-          <text value=""/>
+          <text value="3"/>
         </properties>
       </component>
     </children>

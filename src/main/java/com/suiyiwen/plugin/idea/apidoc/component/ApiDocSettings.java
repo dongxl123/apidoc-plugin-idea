@@ -2,7 +2,6 @@ package com.suiyiwen.plugin.idea.apidoc.component;
 
 import com.intellij.openapi.components.*;
 import com.intellij.openapi.project.Project;
-import com.intellij.openapi.project.ProjectManager;
 import com.suiyiwen.plugin.idea.apidoc.constant.ApiDocConstant;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -17,9 +16,9 @@ import org.jetbrains.annotations.Nullable;
 )
 public class ApiDocSettings implements PersistentStateComponent<ApiDocSettings> {
 
-    private int depth;
+    private int depth = ApiDocConstant.OBJECT_EXTRACT_MAX_DEPTH;
 
-    private String version;
+    private String version = ApiDocConstant.DEFAULT_VERSION;
 
     public int getDepth() {
         return depth;
@@ -39,23 +38,6 @@ public class ApiDocSettings implements PersistentStateComponent<ApiDocSettings> 
 
     public static ApiDocSettings getInstance(@NotNull Project project) {
         return ServiceManager.getService(project, ApiDocSettings.class);
-    }
-
-    public static int getActualDepth(@NotNull Project project) {
-        int depth = ApiDocSettings.getInstance(project).getDepth();
-        if (depth > 0) {
-            return depth;
-        }
-        //当前项目无配置
-        if (!project.isDefault()) {
-            //非默认项目，使用默认项目配置
-            depth = ApiDocSettings.getInstance(ProjectManager.getInstance().getDefaultProject()).getDepth();
-        }
-        //默认项目或非默认项目获取不到配置，使用默认值
-        if (depth <= 0) {
-            depth = ApiDocConstant.OBJECT_EXTRACT_MAX_DEPTH;
-        }
-        return depth;
     }
 
     @Nullable

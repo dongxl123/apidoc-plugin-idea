@@ -1,8 +1,6 @@
 package com.suiyiwen.plugin.idea.apidoc.utils;
 
-import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiType;
-import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,10 +24,10 @@ public enum ClassUtils {
         return null;
     }
 
-    public Class getClass(PsiType psiType, @NotNull PsiElement context) {
+    public Class getClass(PsiType psiType) {
         String text = psiType.getCanonicalText();
         try {
-            if (PsiTypesUtils.INSTANCE.isMap(psiType, context)) {
+            if (PsiTypesUtils.INSTANCE.isMap(psiType)) {
                 return Object.class;
             }
             return org.apache.commons.lang3.ClassUtils.getClass(text);
