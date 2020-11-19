@@ -87,6 +87,7 @@
 
     <!-- please see https://confluence.jetbrains.com/display/IDEADEV/Build+Number+Ranges for text -->
     <idea-version since-build="162" until-build="191.*"/>
+    <depends>com.intellij.modules.java</depends>
 
     <!-- please see https://confluence.jetbrains.com/display/IDEADEV/Plugin+Compatibility+with+IntelliJ+Platform+Products
          on how to target different products -->
@@ -96,15 +97,9 @@
     <extensions defaultExtensionNs="com.intellij">
         <projectService serviceImplementation="com.suiyiwen.plugin.idea.apidoc.component.ApiDocSettings"/>
         <projectConfigurable instance="com.suiyiwen.plugin.idea.apidoc.ui.ApiDocSettingsPage"/>
+        <applicationService serviceInterface="com.suiyiwen.plugin.idea.apidoc.component.operation.JavaDocWriter"
+                            serviceImplementation="com.suiyiwen.plugin.idea.apidoc.component.operation.impl.JavaDocWriterImpl"/>
     </extensions>
-
-    <application-components>
-        <component>
-            <interface-class>com.suiyiwen.plugin.idea.apidoc.component.operation.JavaDocWriter</interface-class>
-            <implementation-class>com.suiyiwen.plugin.idea.apidoc.component.operation.impl.JavaDocWriterImpl
-            </implementation-class>
-        </component>
-    </application-components>
 
     <project-components>
     </project-components>
