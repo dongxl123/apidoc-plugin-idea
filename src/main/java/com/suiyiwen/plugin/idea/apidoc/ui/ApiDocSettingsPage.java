@@ -4,7 +4,6 @@ import com.intellij.openapi.options.Configurable;
 import com.intellij.openapi.options.ConfigurationException;
 import com.intellij.openapi.options.SearchableConfigurable;
 import com.intellij.openapi.project.Project;
-import com.intellij.openapi.project.ProjectManager;
 import com.suiyiwen.plugin.idea.apidoc.component.ApiDocSettings;
 import com.suiyiwen.plugin.idea.apidoc.constant.ApiDocConstant;
 import org.apache.commons.lang3.StringUtils;
@@ -21,6 +20,7 @@ import javax.swing.*;
 public class ApiDocSettingsPage implements SearchableConfigurable, Configurable.NoScroll {
     private JPanel myGeneralPanel;
     private JTextField depthTextField;
+    private JCheckBox usingSnakeCaseCheckBox;
     private Project project;
 
     public ApiDocSettingsPage(@NotNull Project project) {
@@ -49,12 +49,16 @@ public class ApiDocSettingsPage implements SearchableConfigurable, Configurable.
 
     @Override
     public boolean isModified() {
-        return ApiDocSettings.getInstance(project).getDepth() != getDepthValue();
+        ApiDocSettings settings = ApiDocSettings.getInstance(project);
+        return settings.getDepth() != getDepthValue() || settings.isUsingSnakeCase() != usingSnakeCaseCheckBox.isSelected();
     }
 
     @Override
     public void apply() throws ConfigurationException {
-        ApiDocSettings.getInstance(project).setDepth(getDepthValue());
+        ApiDocSettings settings = ApiDocSettings.getInstance(project);
+        settings.setDepth(getDepthValue());
+        settings.setUsingSnakeCase(usingSnakeCaseCheckBox.isSelected());
+        settings.setSaved(true);
     }
 
     @Override
@@ -63,8 +67,9 @@ public class ApiDocSettingsPage implements SearchableConfigurable, Configurable.
     }
 
     private void initFromSettings() {
-        int depth = ApiDocSettings.getActualDepth(project);
-        depthTextField.setText(String.valueOf(depth));
+        ApiDocSettings settings = ApiDocSettings.getInstance(project);
+        depthTextField.setText(String.valueOf(settings.getDepth()));
+        usingSnakeCaseCheckBox.setSelected(settings.isUsingSnakeCase());
     }
 
     private int getDepthValue() {

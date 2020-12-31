@@ -125,7 +125,7 @@ public enum NewDialogModelParseUtils {
         }
         FieldBean rootFieldBean = new FieldBean();
         String defaultRootName = exampleBean instanceof ResultBean ? ApiDocConstant.STRING_RESPONSE : ApiDocConstant.STRING_REQUEST_BODY;
-        rootFieldBean.setName(defaultRootName);
+        rootFieldBean.setName(ApiDocCommonUtils.INSTANCE.getSuitableFieldName(defaultRootName, context));
         rootFieldBean.setType(PsiTypesUtils.INSTANCE.getFieldType(psiType, context).name());
         rootFieldBean.setPsiType(psiType);
         if (PsiTypesUtils.INSTANCE.isEnum(psiType, context)) {
@@ -160,7 +160,7 @@ public enum NewDialogModelParseUtils {
             } else {
                 PsiType psiType = psiParameter.getType();
                 FieldBean fieldBean = new FieldBean();
-                fieldBean.setName(psiParameter.getName());
+                fieldBean.setName(ApiDocCommonUtils.INSTANCE.getSuitableFieldName(psiParameter.getName(), psiParameter));
                 fieldBean.setType(PsiTypesUtils.INSTANCE.getFieldType(psiType, psiParameter).name());
                 fieldBean.setPsiType(psiType);
                 if (PsiTypesUtils.INSTANCE.isEnum(psiType, psiParameter)) {
@@ -206,7 +206,7 @@ public enum NewDialogModelParseUtils {
 
     private FieldBean parseFieldBean(PsiField psiField, PsiSubstitutor psiSubstitutor, int depth, @NotNull PsiElement context) {
         FieldBean fieldBean = new FieldBean();
-        fieldBean.setName(psiField.getName());
+        fieldBean.setName(ApiDocCommonUtils.INSTANCE.getSuitableFieldName(psiField.getName(), context));
         PsiType psiType = PsiTypesUtils.INSTANCE.createGenericPsiType(psiField.getType(), psiSubstitutor);
         fieldBean.setType(PsiTypesUtils.INSTANCE.getFieldType(psiType, context).name());
         fieldBean.setPsiType(psiType);
@@ -214,7 +214,7 @@ public enum NewDialogModelParseUtils {
         if (StringUtils.isBlank(fieldBean.getDescription()) && PsiTypesUtils.INSTANCE.isEnum(psiType, context)) {
             fieldBean.setDescription(PsiTypesUtils.INSTANCE.generateEnumDescription(psiType, context));
         }
-        if (depth >= ApiDocSettings.getActualDepth(context.getProject())) {
+        if (depth >= ApiDocSettings.getInstance(context.getProject()).getDepth()) {
             return fieldBean;
         }
         List<FieldBean> childFieldList = parseRefFieldBeanList(psiType, depth + 1, context);

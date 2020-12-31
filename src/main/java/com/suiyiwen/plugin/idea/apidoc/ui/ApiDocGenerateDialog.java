@@ -78,6 +78,7 @@ public class ApiDocGenerateDialog extends DialogWrapper {
         ApiDocSettings settings = ApiDocSettings.getInstance(psiElement.getProject());
         if (StringUtils.isNotBlank(versionTextField.getText())) {
             settings.setVersion(versionTextField.getText());
+            settings.setSaved(true);
         }
     }
 

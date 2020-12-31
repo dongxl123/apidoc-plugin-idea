@@ -28,6 +28,10 @@ Default **Option + Ctrl + Shift + p**(Mac), **Alt + Ctrl + Shift + p** (win)
 
 
 ## Version Info
+v3.0.5
+>
+* new features: output field name support `snake case`
+
 v3.0.4
 >
 * new features: request method support `PATCH`

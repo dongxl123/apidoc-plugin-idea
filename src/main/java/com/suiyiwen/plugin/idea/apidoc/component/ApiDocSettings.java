@@ -17,7 +17,11 @@ import org.jetbrains.annotations.Nullable;
 )
 public class ApiDocSettings implements PersistentStateComponent<ApiDocSettings> {
 
+    private boolean saved;
+
     private int depth;
+
+    private boolean usingSnakeCase;
 
     private String version;
 
@@ -37,25 +41,41 @@ public class ApiDocSettings implements PersistentStateComponent<ApiDocSettings> 
         this.version = version;
     }
 
-    public static ApiDocSettings getInstance(@NotNull Project project) {
-        return ServiceManager.getService(project, ApiDocSettings.class);
+    public boolean isUsingSnakeCase() {
+        return usingSnakeCase;
     }
 
-    public static int getActualDepth(@NotNull Project project) {
-        int depth = ApiDocSettings.getInstance(project).getDepth();
-        if (depth > 0) {
-            return depth;
+    public void setUsingSnakeCase(boolean usingSnakeCase) {
+        this.usingSnakeCase = usingSnakeCase;
+    }
+
+    public boolean isSaved() {
+        return saved;
+    }
+
+    public void setSaved(boolean saved) {
+        this.saved = saved;
+    }
+
+    public static ApiDocSettings getInstance(@NotNull Project project) {
+        ApiDocSettings currentProjectSettings = ServiceManager.getService(project, ApiDocSettings.class);
+        if (currentProjectSettings.isSaved()) {
+            return currentProjectSettings;
+        } else {
+            if (!project.isDefault()) {
+                //普通项目,则使用通用配置
+                ApiDocSettings commonSettings = ServiceManager.getService(ProjectManager.getInstance().getDefaultProject(), ApiDocSettings.class);
+                if (commonSettings.isSaved()) {
+                    currentProjectSettings.setDepth(commonSettings.getDepth());
+                    currentProjectSettings.setUsingSnakeCase(commonSettings.isUsingSnakeCase());
+                    return currentProjectSettings;
+                }
+            }
+            //使用默认配置
+            currentProjectSettings.setDepth(ApiDocConstant.OBJECT_EXTRACT_MAX_DEPTH);
+            currentProjectSettings.setUsingSnakeCase(false);
+            return currentProjectSettings;
         }
-        //当前项目无配置
-        if (!project.isDefault()) {
-            //非默认项目，使用默认项目配置
-            depth = ApiDocSettings.getInstance(ProjectManager.getInstance().getDefaultProject()).getDepth();
-        }
-        //默认项目或非默认项目获取不到配置，使用默认值
-        if (depth <= 0) {
-            depth = ApiDocConstant.OBJECT_EXTRACT_MAX_DEPTH;
-        }
-        return depth;
     }
 
     @Nullable
@@ -68,5 +88,8 @@ public class ApiDocSettings implements PersistentStateComponent<ApiDocSettings> 
     public void loadState(@NotNull ApiDocSettings state) {
         this.depth = state.getDepth();
         this.version = state.getVersion();
+        this.usingSnakeCase = state.isUsingSnakeCase();
+        this.saved = state.isSaved();
     }
+
 }
